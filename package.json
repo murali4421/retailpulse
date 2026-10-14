@@ -1,7 +1,7 @@
 {
   "name": "retailpulse-saas",
   "version": "1.0.0",
-  "description": "RetailPulse SaaS - Small Shop Management, Real-time Inventory & Barcode Tracking",
+  "description": "RetailPulse SaaS - Shop Management, Real-time Inventory & Barcode Tracking",
   "scripts": {
     "start": "npm run start:backend",
     "start:backend": "cd backend && npm start",

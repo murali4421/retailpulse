@@ -17,9 +17,11 @@ export type TabType = 'pos' | 'dashboard' | 'inventory' | 'sales' | 'multistore'
 interface SidebarProps {
   activeTab: TabType;
   onSelectTab: (tab: TabType) => void;
+  isMobileOpen: boolean;
+  onCloseMobile: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab, isMobileOpen, onCloseMobile }) => {
   const { user, hasPermission, hasRole } = useAuth();
 
   const navItems: Array<{
