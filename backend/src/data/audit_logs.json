@@ -1,0 +1,880 @@
+{
+  "auditLogs": [
+    {
+      "id": "aud_b97d9f60",
+      "timestamp": "2026-10-14T10:25:41.225Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "INTER_STORE_TRANSFER",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "fromStoreId": "LOC-003",
+        "toStoreId": "LOC-004",
+        "quantity": 10
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_4ee79a4d",
+      "timestamp": "2026-10-14T10:23:54.107Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "REORDER_ORDER_CREATED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-004",
+      "status": "SUCCESS",
+      "details": {
+        "orderNumber": "PO-2026-988",
+        "totalCost": 1658.8000000000002,
+        "itemsCount": 11
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_231b154e",
+      "timestamp": "2026-10-14T10:22:04.298Z",
+      "eventType": "SALES_EVENT",
+      "action": "SALE_TRANSACTION",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-004",
+      "status": "SUCCESS",
+      "details": {
+        "orderId": "ORD-10045",
+        "receiptNumber": "REC-2026-10045",
+        "total": 69.93,
+        "itemCount": 1,
+        "paymentMethod": "CASH",
+        "offlineGenerated": false
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_6e176cba",
+      "timestamp": "2026-10-14T10:21:58.422Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_RESTOCKED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-004",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_03",
+        "sku": "SKU-MUG-03",
+        "previousStock": 0,
+        "adjustment": 10,
+        "newStock": 10,
+        "reason": "Stock delivery arrival"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_e881638c",
+      "timestamp": "2026-10-14T10:21:55.345Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_RESTOCKED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-004",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "previousStock": 0,
+        "adjustment": 10,
+        "newStock": 10,
+        "reason": "Stock delivery arrival"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_fc59a893",
+      "timestamp": "2026-10-14T10:20:08.120Z",
+      "eventType": "STORE_EVENT",
+      "action": "STORE_CREATED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "storeId": "LOC-004",
+        "name": "Chennai",
+        "code": "CHN-01"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_b763fbf4",
+      "timestamp": "2026-10-14T10:19:15.549Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_04decf35",
+      "timestamp": "2026-10-14T10:19:01.533Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_e236b70c",
+      "timestamp": "2026-10-14T10:18:30.205Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_auditor",
+      "userEmail": "auditor@retailpulse.io",
+      "userRole": "compliance_auditor",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_5a1a3019",
+      "timestamp": "2026-10-14T10:06:22.858Z",
+      "eventType": "SALES_EVENT",
+      "action": "SALE_TRANSACTION",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-003",
+      "status": "SUCCESS",
+      "details": {
+        "orderId": "ORD-10044",
+        "receiptNumber": "REC-2026-10044",
+        "total": 20.03,
+        "itemCount": 1,
+        "paymentMethod": "APPLE_PAY",
+        "offlineGenerated": false
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_30d6992f",
+      "timestamp": "2026-10-14T10:06:17.725Z",
+      "eventType": "SALES_EVENT",
+      "action": "SALE_TRANSACTION",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-003",
+      "status": "SUCCESS",
+      "details": {
+        "orderId": "ORD-10043",
+        "receiptNumber": "REC-2026-10043",
+        "total": 10.81,
+        "itemCount": 1,
+        "paymentMethod": "CASH",
+        "offlineGenerated": false
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_3a3618b2",
+      "timestamp": "2026-10-14T10:05:43.162Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": false,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_4ab2c4d4",
+      "timestamp": "2026-10-14T10:04:34.690Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_auditor",
+      "userEmail": "auditor@retailpulse.io",
+      "userRole": "compliance_auditor",
+      "ipAddress": "::1",
+      "userAgent": "Web Client",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_b914ec46",
+      "timestamp": "2026-10-14T10:04:34.592Z",
+      "eventType": "SALES_EVENT",
+      "action": "SALE_TRANSACTION",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "orderId": "ORD-10042",
+        "receiptNumber": "REC-2026-10042",
+        "total": 16.26,
+        "itemCount": 1,
+        "paymentMethod": "CASH",
+        "offlineGenerated": false
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_00957a40",
+      "timestamp": "2026-10-14T10:04:34.586Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "::1",
+      "userAgent": "Web Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": false,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_6ce13eec",
+      "timestamp": "2026-10-14T10:04:34.475Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "::1",
+      "userAgent": "Web Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_d063870d",
+      "timestamp": "2026-10-14T10:04:34.387Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Web Client",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_de50fc87",
+      "timestamp": "2026-10-14T10:04:23.742Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_ADJUSTED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-003",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "previousStock": 25,
+        "adjustment": 0,
+        "newStock": 25,
+        "reason": "Stock delivery arrival"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_e399c204",
+      "timestamp": "2026-10-14T10:04:11.937Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_RESTOCKED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-003",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "previousStock": 10,
+        "adjustment": 15,
+        "newStock": 25,
+        "reason": "Stock delivery arrival"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_86e22b1f",
+      "timestamp": "2026-10-14T10:04:00.621Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_RESTOCKED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-003",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "previousStock": 0,
+        "adjustment": 10,
+        "newStock": 10,
+        "reason": "Stock delivery arrival"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_3ccd4457",
+      "timestamp": "2026-10-14T10:03:47.404Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_02e3174b",
+      "timestamp": "2026-10-14T10:01:42.289Z",
+      "eventType": "OAUTH2_EVENT",
+      "action": "OAUTH_CODE_ISSUED",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "provider": "OKTA",
+        "code": "code_1094d74c930040b8a388a768d8d735d7"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_d393aa22",
+      "timestamp": "2026-10-14T10:01:41.348Z",
+      "eventType": "OAUTH2_EVENT",
+      "action": "OAUTH_CODE_ISSUED",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "provider": "OKTA",
+        "code": "code_61dcc7777c1842bfac7d473acc865319"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_602115f9",
+      "timestamp": "2026-10-14T10:00:52.788Z",
+      "eventType": "OAUTH2_EVENT",
+      "action": "OAUTH_CODE_ISSUED",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "provider": "OKTA",
+        "code": "code_8d6d6173296b459f87e61b5fea060745"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_5890d929",
+      "timestamp": "2026-10-14T10:00:49.260Z",
+      "eventType": "OAUTH2_EVENT",
+      "action": "OAUTH_CODE_ISSUED",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "provider": "AUTH0",
+        "code": "code_35e53308d4264ed39dad458cea2f17ad"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_64fc3d4e",
+      "timestamp": "2026-10-14T10:00:39.405Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_auditor",
+      "userEmail": "auditor@retailpulse.io",
+      "userRole": "compliance_auditor",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_98aa0f64",
+      "timestamp": "2026-10-14T10:00:39.324Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": false,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_c46171d9",
+      "timestamp": "2026-10-14T10:00:39.243Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_37b98c63",
+      "timestamp": "2026-10-14T10:00:39.122Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_3aa67dbc",
+      "timestamp": "2026-10-14T09:56:57.674Z",
+      "eventType": "SALES_EVENT",
+      "action": "SALE_TRANSACTION",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "orderId": "ORD-10041",
+        "receiptNumber": "REC-2026-10041",
+        "total": 130.07,
+        "itemCount": 1,
+        "paymentMethod": "CREDIT_CARD",
+        "offlineGenerated": false
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_60991f5c",
+      "timestamp": "2026-10-14T09:56:35.538Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_RESTOCKED",
+      "userId": "anonymous",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "productId": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "previousStock": 0,
+        "adjustment": 11,
+        "newStock": 11,
+        "reason": "Stock delivery arrival"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_f6e73532",
+      "timestamp": "2026-10-14T09:56:12.622Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_7696ad49",
+      "timestamp": "2026-10-14T09:55:50.147Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": false,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_e27a1c0c",
+      "timestamp": "2026-10-14T09:52:10.884Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": false,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_0736de94",
+      "timestamp": "2026-10-14T09:51:06.978Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "PRODUCT_CREATED",
+      "userId": "anonymous",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "id": "prod_357f2ce2",
+        "sku": "SKU-58ED",
+        "name": "ABC Items"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_8b257015",
+      "timestamp": "2026-10-14T09:43:11.728Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_054a906e",
+      "timestamp": "2026-10-14T09:41:11.839Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_485e827b",
+      "timestamp": "2026-10-14T09:41:03.200Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_f030e85e",
+      "timestamp": "2026-10-14T09:40:32.895Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_cashier",
+      "userEmail": "cashier@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": false,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_d8b80359",
+      "timestamp": "2026-10-14T09:40:13.207Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "storeId": "LOC-001",
+      "status": "FAILURE",
+      "details": {
+        "reason": "Invalid TOTP code supplied"
+      },
+      "severity": "WARNING"
+    },
+    {
+      "id": "aud_seed_01",
+      "timestamp": "2026-10-14T09:14:48.937Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "198.51.100.24",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "severity": "INFO",
+      "details": {
+        "method": "OAuth2/OIDC",
+        "idp": "Okta"
+      }
+    },
+    {
+      "id": "aud_seed_02",
+      "timestamp": "2026-10-14T09:01:48.937Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "STOCK_RESTOCK",
+      "userId": "usr_mgr",
+      "userEmail": "manager.downtown@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "198.51.100.89",
+      "userAgent": "RetailPulse Desktop v1.0 (Electron)",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "severity": "INFO",
+      "details": {
+        "sku": "SKU-COF-01",
+        "quantityAdded": 50,
+        "supplier": "Pacific Roasters Co."
+      }
+    },
+    {
+      "id": "aud_seed_03",
+      "timestamp": "2026-10-14T08:41:48.937Z",
+      "eventType": "SECURITY_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "anonymous",
+      "userEmail": "manager.downtown@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "203.0.113.195",
+      "userAgent": "Python-Requests/2.31",
+      "storeId": "LOC-001",
+      "status": "FAILURE",
+      "severity": "WARNING",
+      "details": {
+        "reason": "Invalid TOTP MFA token",
+        "attempt": 1
+      }
+    },
+    {
+      "id": "aud_seed_04",
+      "timestamp": "2026-10-14T08:16:48.937Z",
+      "eventType": "SALES_EVENT",
+      "action": "SALE_TRANSACTION",
+      "userId": "usr_cashier",
+      "userEmail": "cashier.alex@retailpulse.io",
+      "userRole": "cashier",
+      "ipAddress": "10.0.4.15",
+      "userAgent": "RetailPulse POS Terminal (Touch/Scanner)",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "severity": "INFO",
+      "details": {
+        "orderId": "ORD-9842",
+        "totalAmount": 48.5,
+        "itemsCount": 3,
+        "paymentMethod": "NFC_CARD"
+      }
+    },
+    {
+      "id": "aud_seed_05",
+      "timestamp": "2026-10-14T07:36:48.937Z",
+      "eventType": "COMPLIANCE_EVENT",
+      "action": "GDPR_CONSENT_UPDATE",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "198.51.100.24",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "severity": "INFO",
+      "details": {
+        "policyVersion": "v2.4-2026",
+        "type": "Customer Loyalty Data Retention"
+      }
+    }
+  ],
+  "securityAlerts": [
+    {
+      "id": "alt_seed_01",
+      "timestamp": "2026-10-14T08:41:48.937Z",
+      "status": "ACTIVE",
+      "threatType": "SUSPICIOUS_MFA_FAILURE",
+      "severity": "WARNING",
+      "title": "MFA Verification Anomaly Detected",
+      "description": "Repeated TOTP MFA failure attempt for account manager.downtown@retailpulse.io from untrusted IP 203.0.113.195.",
+      "affectedUser": "manager.downtown@retailpulse.io",
+      "ipAddress": "203.0.113.195",
+      "recommendedAction": "Verify user credentials or reset password"
+    }
+  ]
+}

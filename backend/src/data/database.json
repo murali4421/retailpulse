@@ -1,0 +1,2017 @@
+{
+  "stores": [
+    {
+      "id": "LOC-001",
+      "name": "Downtown Flagship Store",
+      "code": "DWTN-01",
+      "address": "101 Market St, Suite 400",
+      "city": "San Francisco, CA",
+      "taxRate": 0.085,
+      "phone": "+1 (555) 234-5678",
+      "status": "active",
+      "lastSyncedAt": "2026-10-14T09:26:48.935Z"
+    },
+    {
+      "id": "LOC-002",
+      "name": "Uptown Express Outlet",
+      "code": "UPTN-02",
+      "address": "742 Grand Avenue",
+      "city": "Oakland, CA",
+      "taxRate": 0.0925,
+      "phone": "+1 (555) 876-5432",
+      "status": "active",
+      "lastSyncedAt": "2026-10-14T10:23:15.871Z"
+    },
+    {
+      "id": "LOC-003",
+      "name": "Westside Hub & Warehouse",
+      "code": "WST-03",
+      "address": "500 Logistics Way, Bay 12",
+      "city": "San Jose, CA",
+      "taxRate": 0.0825,
+      "phone": "+1 (555) 432-1098",
+      "status": "active",
+      "lastSyncedAt": "2026-10-14T09:11:48.936Z"
+    },
+    {
+      "id": "LOC-004",
+      "name": "Chennai",
+      "code": "CHN-01",
+      "address": "Anna Salai",
+      "city": "Chennai",
+      "taxRate": 6,
+      "phone": "+609791970890",
+      "status": "active",
+      "lastSyncedAt": "2026-10-14T10:23:14.453Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr_admin",
+      "name": "Elena Rostova",
+      "email": "admin@retailpulse.io",
+      "passwordHash": "$2a$10$AhxDciO5nKt8mX3ijMQqD../vYQ.nANfJuh1e9SxeVfjoA7kVA17.",
+      "role": "super_admin",
+      "storeId": "ALL",
+      "phone": "+1 555-0100",
+      "mfaEnabled": true,
+      "mfaSecret": "JBSWY3DPEHPK3PXP",
+      "status": "active",
+      "createdAt": "2026-01-10T08:00:00Z",
+      "permissions": [
+        "*"
+      ]
+    },
+    {
+      "id": "usr_mgr",
+      "name": "Marcus Vance",
+      "email": "manager@retailpulse.io",
+      "passwordHash": "$2a$10$Gweb65NxiujkUX90.eJkdeBHRPk2/H8J5C3VWkD/I5.RkyMXxHE4y",
+      "role": "store_manager",
+      "storeId": "LOC-001",
+      "phone": "+1 555-0101",
+      "mfaEnabled": true,
+      "mfaSecret": "JBSWY3DPEHPK3PXP",
+      "status": "active",
+      "createdAt": "2026-01-15T09:00:00Z",
+      "permissions": [
+        "pos:access",
+        "inventory:read",
+        "inventory:write",
+        "inventory:reorder",
+        "sales:create",
+        "sales:read",
+        "sales:refund",
+        "reports:view",
+        "reports:export",
+        "compliance:read"
+      ]
+    },
+    {
+      "id": "usr_cashier",
+      "name": "Alex Rivera",
+      "email": "cashier@retailpulse.io",
+      "passwordHash": "$2a$10$wws5h8ElLYOe3qU7UtOxJ.o7fYnCnB0c1szCloNnzOxIqT7s7I6WG",
+      "role": "cashier",
+      "storeId": "LOC-001",
+      "phone": "+1 555-0102",
+      "mfaEnabled": false,
+      "status": "active",
+      "createdAt": "2026-02-01T10:00:00Z",
+      "permissions": [
+        "pos:access",
+        "inventory:read",
+        "sales:create",
+        "sales:read"
+      ]
+    },
+    {
+      "id": "usr_auditor",
+      "name": "Sarah Chen, CISA",
+      "email": "auditor@retailpulse.io",
+      "passwordHash": "$2a$10$g97s9imkNBWh4M84ow5LWeb4Wx2EvVLwhDhv4E4XKXnC5MJ4dBIm.",
+      "role": "compliance_auditor",
+      "storeId": "ALL",
+      "phone": "+1 555-0103",
+      "mfaEnabled": true,
+      "mfaSecret": "JBSWY3DPEHPK3PXP",
+      "status": "active",
+      "createdAt": "2026-02-15T11:00:00Z",
+      "permissions": [
+        "inventory:read",
+        "sales:read",
+        "reports:view",
+        "reports:export",
+        "audit:read",
+        "audit:export",
+        "compliance:read",
+        "compliance:export"
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "id": "prod_357f2ce2",
+      "stockByStore": {
+        "LOC-001": 0,
+        "LOC-002": 0,
+        "LOC-003": 14,
+        "LOC-004": 19
+      },
+      "name": "ABC Items",
+      "sku": "SKU-58ED",
+      "barcode": "890122563601",
+      "category": "Grocery",
+      "description": "",
+      "costPrice": 5,
+      "retailPrice": 9.99,
+      "minAlertThreshold": 10,
+      "supplier": "XYZ Grocery",
+      "updatedAt": "2026-10-14T10:25:41.223Z"
+    },
+    {
+      "id": "prod_01",
+      "sku": "SKU-COF-01",
+      "barcode": "890123456789",
+      "name": "Artisan Dark Roast Beans (12oz)",
+      "category": "Beverages",
+      "description": "Single-origin Ethiopian Yirgacheffe, freshly roasted with rich cocoa undertones.",
+      "costPrice": 7.5,
+      "retailPrice": 14.99,
+      "stockByStore": {
+        "LOC-001": 41,
+        "LOC-002": 18,
+        "LOC-003": 120,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 15,
+      "supplier": "Pacific Roasters Co.",
+      "unit": "bag",
+      "taxable": true,
+      "updatedAt": "2026-10-14T10:04:34.591Z"
+    },
+    {
+      "id": "prod_02",
+      "sku": "SKU-TEA-02",
+      "barcode": "890123456790",
+      "name": "Ceremonial Matcha Green Tea Tin (50g)",
+      "category": "Beverages",
+      "description": "First-harvest shade-grown Uji green tea matcha powder.",
+      "costPrice": 9.2,
+      "retailPrice": 18.5,
+      "stockByStore": {
+        "LOC-001": 8,
+        "LOC-002": 5,
+        "LOC-003": 34,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 12,
+      "supplier": "Kyoto Tea Imports",
+      "unit": "tin",
+      "taxable": true,
+      "updatedAt": "2026-10-14T10:06:22.856Z"
+    },
+    {
+      "id": "prod_03",
+      "sku": "SKU-MUG-03",
+      "barcode": "890123456791",
+      "name": "Insulated Stainless Tumbler 16oz",
+      "category": "Merchandise",
+      "description": "Double-wall vacuum insulated stainless steel coffee travel mug.",
+      "costPrice": 11,
+      "retailPrice": 24.99,
+      "stockByStore": {
+        "LOC-001": 25,
+        "LOC-002": 14,
+        "LOC-003": 80,
+        "LOC-004": 10
+      },
+      "minAlertThreshold": 10,
+      "supplier": "Apex Warehousing",
+      "unit": "pcs",
+      "taxable": true,
+      "updatedAt": "2026-10-14T10:21:58.419Z"
+    },
+    {
+      "id": "prod_04",
+      "sku": "SKU-BAK-04",
+      "barcode": "890123456792",
+      "name": "Rustic Sourdough Boule (750g)",
+      "category": "Bakery",
+      "description": "Slow-fermented wild yeast artisan bread baked daily in stone hearth.",
+      "costPrice": 2.1,
+      "retailPrice": 6.5,
+      "stockByStore": {
+        "LOC-001": 6,
+        "LOC-002": 4,
+        "LOC-003": 0,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 10,
+      "supplier": "Golden Gate Hearth Bakery",
+      "unit": "loaf",
+      "taxable": false,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    },
+    {
+      "id": "prod_05",
+      "sku": "SKU-DRY-05",
+      "barcode": "890123456793",
+      "name": "Organic Oat Milk Barista Edition (1L)",
+      "category": "Grocery",
+      "description": "Creamy barista-grade micro-foam ready oat drink for espresso.",
+      "costPrice": 2.2,
+      "retailPrice": 4.75,
+      "stockByStore": {
+        "LOC-001": 34,
+        "LOC-002": 28,
+        "LOC-003": 150,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 15,
+      "supplier": "Nordic Harvest Co.",
+      "unit": "carton",
+      "taxable": true,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    },
+    {
+      "id": "prod_06",
+      "sku": "SKU-COF-06",
+      "barcode": "890123456794",
+      "name": "Nitro Cold Brew Concentrate 32oz",
+      "category": "Beverages",
+      "description": "Smooth 16-hour slow steep cold brew concentrate.",
+      "costPrice": 5.8,
+      "retailPrice": 12.99,
+      "stockByStore": {
+        "LOC-001": 18,
+        "LOC-002": 12,
+        "LOC-003": 60,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 8,
+      "supplier": "Pacific Roasters Co.",
+      "unit": "bottle",
+      "taxable": true,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    },
+    {
+      "id": "prod_07",
+      "sku": "SKU-HON-07",
+      "barcode": "890123456795",
+      "name": "Wildflower Honeycomb Jar (16oz)",
+      "category": "Grocery",
+      "description": "100% raw unpasteurized comb honey from local Sonoma apiaries.",
+      "costPrice": 5.1,
+      "retailPrice": 11.25,
+      "stockByStore": {
+        "LOC-001": 4,
+        "LOC-002": 3,
+        "LOC-003": 20,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 8,
+      "supplier": "Sonoma Valley Apiary",
+      "unit": "jar",
+      "taxable": false,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    },
+    {
+      "id": "prod_08",
+      "sku": "SKU-BAK-08",
+      "barcode": "890123456796",
+      "name": "Gluten-Free Almond Blueberry Muffin",
+      "category": "Bakery",
+      "description": "Baked with almond flour, fresh organic blueberries, and cane sugar.",
+      "costPrice": 1.25,
+      "retailPrice": 3.95,
+      "stockByStore": {
+        "LOC-001": 19,
+        "LOC-002": 11,
+        "LOC-003": 0,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 10,
+      "supplier": "Golden Gate Hearth Bakery",
+      "unit": "pcs",
+      "taxable": false,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    },
+    {
+      "id": "prod_09",
+      "sku": "SKU-CHO-09",
+      "barcode": "890123456797",
+      "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+      "category": "Confectionery",
+      "description": "Single-estate fair trade bean-to-bar dark chocolate with sea salt.",
+      "costPrice": 2.4,
+      "retailPrice": 5.5,
+      "stockByStore": {
+        "LOC-001": 52,
+        "LOC-002": 30,
+        "LOC-003": 110,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 15,
+      "supplier": "Mission Artisan Chocolates",
+      "unit": "bar",
+      "taxable": true,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    },
+    {
+      "id": "prod_10",
+      "sku": "SKU-TOT-10",
+      "barcode": "890123456798",
+      "name": "Heavyweight Canvas Shopping Tote",
+      "category": "Merchandise",
+      "description": "100% recycled natural organic cotton canvas reusable shopping bag.",
+      "costPrice": 3.2,
+      "retailPrice": 8.99,
+      "stockByStore": {
+        "LOC-001": 31,
+        "LOC-002": 22,
+        "LOC-003": 95,
+        "LOC-004": 0
+      },
+      "minAlertThreshold": 10,
+      "supplier": "EcoPack Solutions",
+      "unit": "pcs",
+      "taxable": true,
+      "updatedAt": "2026-10-14T09:26:48.936Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "ORD-10045",
+      "receiptNumber": "REC-2026-10045",
+      "timestamp": "2026-10-14T10:22:04.296Z",
+      "storeId": "LOC-004",
+      "storeName": "Chennai",
+      "cashierId": "usr_admin",
+      "cashierName": "Elena Rostova",
+      "items": [
+        {
+          "productId": "prod_357f2ce2",
+          "sku": "SKU-58ED",
+          "barcode": "890122563601",
+          "name": "ABC Items",
+          "price": 9.99,
+          "costPrice": 5,
+          "quantity": 1,
+          "lineTotal": 9.99
+        }
+      ],
+      "subtotal": 9.99,
+      "discount": 0,
+      "tax": 59.94,
+      "total": 69.93,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10044",
+      "receiptNumber": "REC-2026-10044",
+      "timestamp": "2026-10-14T10:06:22.856Z",
+      "storeId": "LOC-003",
+      "storeName": "Westside Hub & Warehouse",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "barcode": "890123456790",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "costPrice": 9.2,
+          "quantity": 1,
+          "lineTotal": 18.5
+        }
+      ],
+      "subtotal": 18.5,
+      "discount": 0,
+      "tax": 1.53,
+      "total": 20.03,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10043",
+      "receiptNumber": "REC-2026-10043",
+      "timestamp": "2026-10-14T10:06:17.723Z",
+      "storeId": "LOC-003",
+      "storeName": "Westside Hub & Warehouse",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_357f2ce2",
+          "sku": "SKU-58ED",
+          "barcode": "890122563601",
+          "name": "ABC Items",
+          "price": 9.99,
+          "costPrice": 5,
+          "quantity": 1,
+          "lineTotal": 9.99
+        }
+      ],
+      "subtotal": 9.99,
+      "discount": 0,
+      "tax": 0.82,
+      "total": 10.81,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10042",
+      "receiptNumber": "REC-2026-10042",
+      "timestamp": "2026-10-14T10:04:34.591Z",
+      "storeId": "LOC-001",
+      "storeName": "Downtown Flagship Store",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "barcode": "890123456789",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "costPrice": 7.5,
+          "quantity": 1,
+          "lineTotal": 14.99
+        }
+      ],
+      "subtotal": 14.99,
+      "discount": 0,
+      "tax": 1.27,
+      "total": 16.26,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10041",
+      "receiptNumber": "REC-2026-10041",
+      "timestamp": "2026-10-14T09:56:57.672Z",
+      "storeId": "LOC-001",
+      "storeName": "Downtown Flagship Store",
+      "cashierId": "usr_mgr",
+      "cashierName": "Marcus Vance",
+      "items": [
+        {
+          "productId": "prod_357f2ce2",
+          "sku": "SKU-58ED",
+          "barcode": "890122563601",
+          "name": "ABC Items",
+          "price": 9.99,
+          "costPrice": 5,
+          "quantity": 12,
+          "lineTotal": 119.88
+        }
+      ],
+      "subtotal": 119.88,
+      "discount": 0,
+      "tax": 10.19,
+      "total": 130.07,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10000",
+      "receiptNumber": "REC-2026-10000",
+      "timestamp": "2026-10-14T09:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 1,
+          "lineTotal": 14.99
+        }
+      ],
+      "subtotal": 14.99,
+      "tax": 1.39,
+      "total": 16.38,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10001",
+      "receiptNumber": "REC-2026-10001",
+      "timestamp": "2026-10-14T06:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 1,
+          "lineTotal": 18.5
+        },
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 2,
+          "lineTotal": 9.5
+        }
+      ],
+      "subtotal": 28,
+      "tax": 2.38,
+      "total": 30.38,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10002",
+      "receiptNumber": "REC-2026-10002",
+      "timestamp": "2026-10-14T03:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 1,
+          "lineTotal": 24.99
+        },
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 2,
+          "lineTotal": 25.98
+        },
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 1,
+          "lineTotal": 5.5
+        }
+      ],
+      "subtotal": 56.47,
+      "tax": 4.8,
+      "total": 61.27,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10003",
+      "receiptNumber": "REC-2026-10003",
+      "timestamp": "2026-10-13T23:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 1,
+          "lineTotal": 6.5
+        }
+      ],
+      "subtotal": 6.5,
+      "tax": 0.6,
+      "total": 7.1,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10004",
+      "receiptNumber": "REC-2026-10004",
+      "timestamp": "2026-10-13T20:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 1,
+          "lineTotal": 4.75
+        },
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 2,
+          "lineTotal": 7.9
+        }
+      ],
+      "subtotal": 12.65,
+      "tax": 1.08,
+      "total": 13.73,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10005",
+      "receiptNumber": "REC-2026-10005",
+      "timestamp": "2026-10-13T17:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 1,
+          "lineTotal": 12.99
+        },
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 2,
+          "lineTotal": 11
+        },
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 1,
+          "lineTotal": 18.5
+        }
+      ],
+      "subtotal": 42.49,
+      "tax": 3.61,
+      "total": 46.1,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10006",
+      "receiptNumber": "REC-2026-10006",
+      "timestamp": "2026-10-13T09:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 1,
+          "lineTotal": 11.25
+        }
+      ],
+      "subtotal": 11.25,
+      "tax": 1.04,
+      "total": 12.29,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10007",
+      "receiptNumber": "REC-2026-10007",
+      "timestamp": "2026-10-13T05:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 1,
+          "lineTotal": 3.95
+        },
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 2,
+          "lineTotal": 29.98
+        }
+      ],
+      "subtotal": 33.93,
+      "tax": 2.88,
+      "total": 36.81,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "REFUNDED",
+      "refundReason": "Customer returned unopened item",
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10008",
+      "receiptNumber": "REC-2026-10008",
+      "timestamp": "2026-10-13T03:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 1,
+          "lineTotal": 5.5
+        },
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 2,
+          "lineTotal": 37
+        },
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 1,
+          "lineTotal": 4.75
+        }
+      ],
+      "subtotal": 47.25,
+      "tax": 4.02,
+      "total": 51.27,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10009",
+      "receiptNumber": "REC-2026-10009",
+      "timestamp": "2026-10-12T23:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 1,
+          "lineTotal": 8.99
+        }
+      ],
+      "subtotal": 8.99,
+      "tax": 0.83,
+      "total": 9.82,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10010",
+      "receiptNumber": "REC-2026-10010",
+      "timestamp": "2026-10-12T20:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 1,
+          "lineTotal": 14.99
+        },
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 2,
+          "lineTotal": 13
+        }
+      ],
+      "subtotal": 27.99,
+      "tax": 2.38,
+      "total": 30.37,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10011",
+      "receiptNumber": "REC-2026-10011",
+      "timestamp": "2026-10-12T18:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 1,
+          "lineTotal": 18.5
+        },
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 2,
+          "lineTotal": 9.5
+        },
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 1,
+          "lineTotal": 3.95
+        }
+      ],
+      "subtotal": 31.95,
+      "tax": 2.72,
+      "total": 34.67,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10012",
+      "receiptNumber": "REC-2026-10012",
+      "timestamp": "2026-10-12T08:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 1,
+          "lineTotal": 24.99
+        }
+      ],
+      "subtotal": 24.99,
+      "tax": 2.31,
+      "total": 27.3,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10013",
+      "receiptNumber": "REC-2026-10013",
+      "timestamp": "2026-10-12T05:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 1,
+          "lineTotal": 6.5
+        },
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 2,
+          "lineTotal": 22.5
+        }
+      ],
+      "subtotal": 29,
+      "tax": 2.47,
+      "total": 31.47,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10014",
+      "receiptNumber": "REC-2026-10014",
+      "timestamp": "2026-10-12T02:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 1,
+          "lineTotal": 4.75
+        },
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 2,
+          "lineTotal": 7.9
+        },
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 1,
+          "lineTotal": 14.99
+        }
+      ],
+      "subtotal": 27.64,
+      "tax": 2.35,
+      "total": 29.99,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10015",
+      "receiptNumber": "REC-2026-10015",
+      "timestamp": "2026-10-11T23:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 1,
+          "lineTotal": 12.99
+        }
+      ],
+      "subtotal": 12.99,
+      "tax": 1.2,
+      "total": 14.19,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10016",
+      "receiptNumber": "REC-2026-10016",
+      "timestamp": "2026-10-11T20:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 1,
+          "lineTotal": 11.25
+        },
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 2,
+          "lineTotal": 17.98
+        }
+      ],
+      "subtotal": 29.23,
+      "tax": 2.48,
+      "total": 31.71,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10017",
+      "receiptNumber": "REC-2026-10017",
+      "timestamp": "2026-10-11T18:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 1,
+          "lineTotal": 3.95
+        },
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 2,
+          "lineTotal": 29.98
+        },
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 1,
+          "lineTotal": 6.5
+        }
+      ],
+      "subtotal": 40.43,
+      "tax": 3.44,
+      "total": 43.87,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10018",
+      "receiptNumber": "REC-2026-10018",
+      "timestamp": "2026-10-11T08:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 1,
+          "lineTotal": 5.5
+        }
+      ],
+      "subtotal": 5.5,
+      "tax": 0.51,
+      "total": 6.01,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10019",
+      "receiptNumber": "REC-2026-10019",
+      "timestamp": "2026-10-11T05:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 1,
+          "lineTotal": 8.99
+        },
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 2,
+          "lineTotal": 49.98
+        }
+      ],
+      "subtotal": 58.97,
+      "tax": 5.01,
+      "total": 63.98,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10020",
+      "receiptNumber": "REC-2026-10020",
+      "timestamp": "2026-10-11T02:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 1,
+          "lineTotal": 14.99
+        },
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 2,
+          "lineTotal": 13
+        },
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 1,
+          "lineTotal": 11.25
+        }
+      ],
+      "subtotal": 39.24,
+      "tax": 3.34,
+      "total": 42.58,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10021",
+      "receiptNumber": "REC-2026-10021",
+      "timestamp": "2026-10-11T00:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 1,
+          "lineTotal": 18.5
+        }
+      ],
+      "subtotal": 18.5,
+      "tax": 1.71,
+      "total": 20.21,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10022",
+      "receiptNumber": "REC-2026-10022",
+      "timestamp": "2026-10-10T20:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 1,
+          "lineTotal": 24.99
+        },
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 2,
+          "lineTotal": 25.98
+        }
+      ],
+      "subtotal": 50.97,
+      "tax": 4.33,
+      "total": 55.3,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10023",
+      "receiptNumber": "REC-2026-10023",
+      "timestamp": "2026-10-10T17:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 1,
+          "lineTotal": 6.5
+        },
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 2,
+          "lineTotal": 22.5
+        },
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 1,
+          "lineTotal": 8.99
+        }
+      ],
+      "subtotal": 37.99,
+      "tax": 3.23,
+      "total": 41.22,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10024",
+      "receiptNumber": "REC-2026-10024",
+      "timestamp": "2026-10-10T09:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 1,
+          "lineTotal": 4.75
+        }
+      ],
+      "subtotal": 4.75,
+      "tax": 0.44,
+      "total": 5.19,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10025",
+      "receiptNumber": "REC-2026-10025",
+      "timestamp": "2026-10-10T05:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 1,
+          "lineTotal": 12.99
+        },
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 2,
+          "lineTotal": 11
+        }
+      ],
+      "subtotal": 23.99,
+      "tax": 2.04,
+      "total": 26.03,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10026",
+      "receiptNumber": "REC-2026-10026",
+      "timestamp": "2026-10-10T02:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 1,
+          "lineTotal": 11.25
+        },
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 2,
+          "lineTotal": 17.98
+        },
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 1,
+          "lineTotal": 24.99
+        }
+      ],
+      "subtotal": 54.22,
+      "tax": 4.61,
+      "total": 58.83,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10027",
+      "receiptNumber": "REC-2026-10027",
+      "timestamp": "2026-10-09T23:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 1,
+          "lineTotal": 3.95
+        }
+      ],
+      "subtotal": 3.95,
+      "tax": 0.37,
+      "total": 4.32,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10028",
+      "receiptNumber": "REC-2026-10028",
+      "timestamp": "2026-10-09T20:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 1,
+          "lineTotal": 5.5
+        },
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 2,
+          "lineTotal": 37
+        }
+      ],
+      "subtotal": 42.5,
+      "tax": 3.61,
+      "total": 46.11,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10029",
+      "receiptNumber": "REC-2026-10029",
+      "timestamp": "2026-10-09T18:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 1,
+          "lineTotal": 8.99
+        },
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 2,
+          "lineTotal": 49.98
+        },
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 1,
+          "lineTotal": 12.99
+        }
+      ],
+      "subtotal": 71.96,
+      "tax": 6.12,
+      "total": 78.08,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10030",
+      "receiptNumber": "REC-2026-10030",
+      "timestamp": "2026-10-09T08:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 1,
+          "lineTotal": 14.99
+        }
+      ],
+      "subtotal": 14.99,
+      "tax": 1.39,
+      "total": 16.38,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10031",
+      "receiptNumber": "REC-2026-10031",
+      "timestamp": "2026-10-09T05:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 1,
+          "lineTotal": 18.5
+        },
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 2,
+          "lineTotal": 9.5
+        }
+      ],
+      "subtotal": 28,
+      "tax": 2.38,
+      "total": 30.38,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10032",
+      "receiptNumber": "REC-2026-10032",
+      "timestamp": "2026-10-09T02:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "price": 24.99,
+          "quantity": 1,
+          "lineTotal": 24.99
+        },
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 2,
+          "lineTotal": 25.98
+        },
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 1,
+          "lineTotal": 5.5
+        }
+      ],
+      "subtotal": 56.47,
+      "tax": 4.8,
+      "total": 61.27,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10033",
+      "receiptNumber": "REC-2026-10033",
+      "timestamp": "2026-10-08T23:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "price": 6.5,
+          "quantity": 1,
+          "lineTotal": 6.5
+        }
+      ],
+      "subtotal": 6.5,
+      "tax": 0.6,
+      "total": 7.1,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10034",
+      "receiptNumber": "REC-2026-10034",
+      "timestamp": "2026-10-08T21:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 1,
+          "lineTotal": 4.75
+        },
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 2,
+          "lineTotal": 7.9
+        }
+      ],
+      "subtotal": 12.65,
+      "tax": 1.08,
+      "total": 13.73,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10035",
+      "receiptNumber": "REC-2026-10035",
+      "timestamp": "2026-10-08T18:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "price": 12.99,
+          "quantity": 1,
+          "lineTotal": 12.99
+        },
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 2,
+          "lineTotal": 11
+        },
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 1,
+          "lineTotal": 18.5
+        }
+      ],
+      "subtotal": 42.49,
+      "tax": 3.61,
+      "total": 46.1,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10036",
+      "receiptNumber": "REC-2026-10036",
+      "timestamp": "2026-10-08T08:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "price": 11.25,
+          "quantity": 1,
+          "lineTotal": 11.25
+        }
+      ],
+      "subtotal": 11.25,
+      "tax": 1.04,
+      "total": 12.29,
+      "paymentMethod": "CREDIT_CARD",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10037",
+      "receiptNumber": "REC-2026-10037",
+      "timestamp": "2026-10-08T06:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "price": 3.95,
+          "quantity": 1,
+          "lineTotal": 3.95
+        },
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "price": 14.99,
+          "quantity": 2,
+          "lineTotal": 29.98
+        }
+      ],
+      "subtotal": 33.93,
+      "tax": 2.88,
+      "total": 36.81,
+      "paymentMethod": "CASH",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10038",
+      "receiptNumber": "REC-2026-10038",
+      "timestamp": "2026-10-08T02:26:48.936Z",
+      "storeId": "LOC-001",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "price": 5.5,
+          "quantity": 1,
+          "lineTotal": 5.5
+        },
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "price": 18.5,
+          "quantity": 2,
+          "lineTotal": 37
+        },
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "price": 4.75,
+          "quantity": 1,
+          "lineTotal": 4.75
+        }
+      ],
+      "subtotal": 47.25,
+      "tax": 4.02,
+      "total": 51.27,
+      "paymentMethod": "APPLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    },
+    {
+      "id": "ORD-10039",
+      "receiptNumber": "REC-2026-10039",
+      "timestamp": "2026-10-07T23:26:48.936Z",
+      "storeId": "LOC-002",
+      "cashierId": "usr_cashier",
+      "cashierName": "Alex Rivera",
+      "items": [
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "price": 8.99,
+          "quantity": 1,
+          "lineTotal": 8.99
+        }
+      ],
+      "subtotal": 8.99,
+      "tax": 0.83,
+      "total": 9.82,
+      "paymentMethod": "GOOGLE_PAY",
+      "status": "COMPLETED",
+      "refundReason": null,
+      "syncStatus": "SYNCED",
+      "offlineGenerated": false
+    }
+  ],
+  "reorders": [
+    {
+      "id": "REO_0a66a2c1",
+      "orderNumber": "PO-2026-988",
+      "storeId": "LOC-004",
+      "supplier": "Consolidated Distributors",
+      "status": "SUBMITTED",
+      "items": [
+        {
+          "productId": "prod_357f2ce2",
+          "sku": "SKU-58ED",
+          "name": "ABC Items",
+          "quantity": 21,
+          "unitCost": 5
+        },
+        {
+          "productId": "prod_01",
+          "sku": "SKU-COF-01",
+          "name": "Artisan Dark Roast Beans (12oz)",
+          "quantity": 45,
+          "unitCost": 7.5
+        },
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "quantity": 36,
+          "unitCost": 9.2
+        },
+        {
+          "productId": "prod_03",
+          "sku": "SKU-MUG-03",
+          "name": "Insulated Stainless Tumbler 16oz",
+          "quantity": 20,
+          "unitCost": 11
+        },
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "quantity": 30,
+          "unitCost": 2.1
+        },
+        {
+          "productId": "prod_05",
+          "sku": "SKU-DRY-05",
+          "name": "Organic Oat Milk Barista Edition (1L)",
+          "quantity": 45,
+          "unitCost": 2.2
+        },
+        {
+          "productId": "prod_06",
+          "sku": "SKU-COF-06",
+          "name": "Nitro Cold Brew Concentrate 32oz",
+          "quantity": 24,
+          "unitCost": 5.8
+        },
+        {
+          "productId": "prod_07",
+          "sku": "SKU-HON-07",
+          "name": "Wildflower Honeycomb Jar (16oz)",
+          "quantity": 24,
+          "unitCost": 5.1
+        },
+        {
+          "productId": "prod_08",
+          "sku": "SKU-BAK-08",
+          "name": "Gluten-Free Almond Blueberry Muffin",
+          "quantity": 30,
+          "unitCost": 1.25
+        },
+        {
+          "productId": "prod_09",
+          "sku": "SKU-CHO-09",
+          "name": "Fleur de Sel Dark Chocolate Bar (72%)",
+          "quantity": 45,
+          "unitCost": 2.4
+        },
+        {
+          "productId": "prod_10",
+          "sku": "SKU-TOT-10",
+          "name": "Heavyweight Canvas Shopping Tote",
+          "quantity": 30,
+          "unitCost": 3.2
+        }
+      ],
+      "notes": "",
+      "totalEstimatedCost": 1658.8,
+      "createdAt": "2026-10-14T10:23:54.104Z",
+      "createdBy": "admin@retailpulse.io"
+    },
+    {
+      "id": "REO-001",
+      "orderNumber": "PO-2026-081",
+      "supplier": "Kyoto Tea Imports",
+      "storeId": "LOC-001",
+      "status": "PENDING_APPROVAL",
+      "items": [
+        {
+          "productId": "prod_02",
+          "sku": "SKU-TEA-02",
+          "name": "Ceremonial Matcha Green Tea Tin (50g)",
+          "quantity": 24,
+          "unitCost": 9.2
+        }
+      ],
+      "totalEstimatedCost": 220.8,
+      "createdAt": "2026-10-13T09:26:48.936Z"
+    },
+    {
+      "id": "REO-002",
+      "orderNumber": "PO-2026-082",
+      "supplier": "Golden Gate Hearth Bakery",
+      "storeId": "LOC-001",
+      "status": "APPROVED",
+      "items": [
+        {
+          "productId": "prod_04",
+          "sku": "SKU-BAK-04",
+          "name": "Rustic Sourdough Boule (750g)",
+          "quantity": 30,
+          "unitCost": 2.1
+        }
+      ],
+      "totalEstimatedCost": 63,
+      "createdAt": "2026-10-13T21:26:48.936Z"
+    }
+  ],
+  "complianceRecords": [
+    {
+      "id": "CMP-001",
+      "requestType": "RIGHT_OF_ACCESS",
+      "subjectEmail": "customer.jane@example.com",
+      "requestedAt": "2026-10-11T09:26:48.936Z",
+      "status": "COMPLETED",
+      "completedAt": "2026-10-12T09:26:48.936Z",
+      "handler": "admin@retailpulse.io",
+      "notes": "Encrypted export packet generated and transmitted via TLS 1.3."
+    },
+    {
+      "id": "CMP-002",
+      "requestType": "RIGHT_TO_ERASURE",
+      "subjectEmail": "test.privacy@example.com",
+      "requestedAt": "2026-10-13T09:26:48.936Z",
+      "status": "COMPLIANT_ANONYMIZED",
+      "completedAt": "2026-10-13T21:26:48.936Z",
+      "handler": "admin@retailpulse.io",
+      "notes": "Personal identifiers scrubbed from order records; historical accounting aggregates preserved in compliance with tax statutes."
+    }
+  ]
+}
