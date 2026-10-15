@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api, type AuditLog, type SecurityAlert } from '../services/api';
+import { usePosSettings } from '../services/posSettingsContext';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import {
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 
 export const SecurityAudit: React.FC = () => {
+  const { currencySymbol } = usePosSettings();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
   const [thresholds, setThresholds] = useState<any>({
@@ -411,7 +413,7 @@ export const SecurityAudit: React.FC = () => {
 
               <div>
                 <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1">
-                  High-Value Refund Alert Threshold ($):
+                  High-Value Refund Alert Threshold ({currencySymbol}):
                 </label>
                 <input
                   type="number"

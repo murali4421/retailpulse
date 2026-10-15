@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../services/authContext';
+import { usePosSettings } from '../services/posSettingsContext';
 import { DailyReportModal } from '../components/DailyReportModal';
 import {
   AreaChart,
@@ -36,6 +37,7 @@ interface DashboardProps {
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
   const { activeStoreId, hasPermission } = useAuth();
+  const { formatPrice } = usePosSettings();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -174,7 +176,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
             </div>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">
-            ${summary.todayRevenue.toFixed(2)}
+            {formatPrice(summary.todayRevenue)}
           </div>
           <div className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1">
             <ArrowUpRight className="h-3.5 w-3.5" />
@@ -194,7 +196,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
             {summary.grossMarginPercentage}%
           </div>
           <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-            Est. gross profit: ${summary.grossProfit.toFixed(2)}
+            Est. gross profit: {formatPrice(summary.grossProfit)}
           </div>
         </div>
 
@@ -207,7 +209,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
             </div>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">
-            ${summary.averageOrderValue.toFixed(2)}
+            {formatPrice(summary.averageOrderValue)}
           </div>
           <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
             Across {summary.totalOrders} total sales
@@ -223,10 +225,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
             </div>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">
-            ${summary.totalRevenue.toFixed(2)}
+            {formatPrice(summary.totalRevenue)}
           </div>
           <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-            Tax collected: ${summary.totalTaxCollected.toFixed(2)}
+            Tax collected: {formatPrice(summary.totalTaxCollected)}
           </div>
         </div>
       </div>
@@ -255,9 +257,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.2} />
                 <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} tickFormatter={(val) => `$${val}`} />
+                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} tickFormatter={(val) => formatPrice(Number(val))} />
                 <Tooltip
-                  formatter={(val: any) => [`$${val}`, 'Revenue']}
+                  formatter={(val: any) => [formatPrice(Number(val)), 'Revenue']}
                   contentStyle={{
                     backgroundColor: '#0f172a',
                     border: '1px solid #1e293b',
@@ -294,7 +296,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(val: any) => [`$${val}`, 'Amount']}
+                  formatter={(val: any) => [formatPrice(Number(val)), 'Amount']}
                   contentStyle={{
                     backgroundColor: '#0f172a',
                     border: '1px solid #1e293b',
@@ -312,7 +314,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
                   <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }}></span>
                   <span className="text-slate-600 dark:text-slate-400">{item.method.replace('_', ' ')}</span>
                 </div>
-                <span className="font-semibold text-slate-900 dark:text-white">${item.amount.toFixed(2)} ({item.percentage}%)</span>
+                <span className="font-semibold text-slate-900 dark:text-white">{formatPrice(item.amount)} ({item.percentage}%)</span>
               </div>
             ))}
           </div>
@@ -330,9 +332,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
               <BarChart data={hourlyTrends}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.2} />
                 <XAxis dataKey="hour" stroke="#94a3b8" fontSize={10} tickLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} tickFormatter={(v) => `$${v}`} />
+                <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} tickFormatter={(v) => formatPrice(Number(v))} />
                 <Tooltip
-                  formatter={(val: any) => [`$${val}`, 'Sales']}
+                  formatter={(val: any) => [formatPrice(Number(val)), 'Sales']}
                   contentStyle={{
                     backgroundColor: '#0f172a',
                     border: '1px solid #1e293b',
@@ -369,7 +371,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-xs text-slate-900 dark:text-white">${p.revenue.toFixed(2)}</div>
+                  <div className="font-bold text-xs text-slate-900 dark:text-white">{formatPrice(p.revenue)}</div>
                   <div className="text-[10px] text-slate-500">{p.quantity} units sold</div>
                 </div>
               </div>

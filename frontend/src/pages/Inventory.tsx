@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api, type Product, type Store } from '../services/api';
 import { useAuth } from '../services/authContext';
+import { usePosSettings } from '../services/posSettingsContext';
 import { BarcodeScannerModal } from '../components/BarcodeScannerModal';
 import {
   Boxes,
@@ -20,6 +21,7 @@ import {
 
 export const Inventory: React.FC = () => {
   const { activeStoreId, hasPermission } = useAuth();
+  const { formatPrice, currencySymbol } = usePosSettings();
   const [products, setProducts] = useState<Product[]>([]);
   const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
@@ -380,11 +382,11 @@ export const Inventory: React.FC = () => {
                       </td>
 
                       <td className="py-3 px-4 text-right text-slate-500 font-mono">
-                        ${item.costPrice.toFixed(2)}
+                        {formatPrice(item.costPrice)}
                       </td>
 
                       <td className="py-3 px-4 text-right font-bold text-slate-900 dark:text-white font-mono">
-                        ${item.retailPrice.toFixed(2)}
+                        {formatPrice(item.retailPrice)}
                       </td>
 
                       <td className="py-3 px-4 text-center">
@@ -577,7 +579,7 @@ export const Inventory: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1">Cost Price ($)</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1">Cost Price ({currencySymbol})</label>
                   <input
                     type="number"
                     step="0.01"
@@ -587,7 +589,7 @@ export const Inventory: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1">Retail Price ($)</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1">Retail Price ({currencySymbol})</label>
                   <input
                     type="number"
                     step="0.01"
@@ -641,7 +643,7 @@ export const Inventory: React.FC = () => {
                     Automated Replenishment Generator
                   </h3>
                   <p className="text-xs text-slate-500">
-                    {replenishData.itemsToReorderCount} items below threshold. Est. Total: ${replenishData.totalEstimatedCost.toFixed(2)}
+                    {replenishData.itemsToReorderCount} items below threshold. Est. Total: {formatPrice(replenishData.totalEstimatedCost)}
                   </p>
                 </div>
               </div>
@@ -664,7 +666,7 @@ export const Inventory: React.FC = () => {
                       Reorder: +{it.suggestedReorderQty} units
                     </div>
                     <div className="text-[10px] text-slate-400">
-                      Est. Cost: ${it.estimatedCost.toFixed(2)}
+                      Est. Cost: {formatPrice(it.estimatedCost)}
                     </div>
                   </div>
                 </div>

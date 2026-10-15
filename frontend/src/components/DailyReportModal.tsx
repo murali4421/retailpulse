@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { X, FileDown, Printer, Calendar, DollarSign, TrendingUp, Layers } from 'lucide-react';
+import { usePosSettings } from '../services/posSettingsContext';
+import { X, FileDown, Printer, Calendar, TrendingUp, Layers } from 'lucide-react';
 
 interface DailyReportModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
   storeName
 }) => {
   const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const { formatPrice } = usePosSettings();
 
   if (!isOpen || !summaryData) return null;
 
@@ -45,12 +47,12 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
     doc.text('Executive Financial Summary', 14, 44);
 
     const kpiData = [
-      ['Total Gross Revenue', `$${summary.totalRevenue.toFixed(2)}`],
-      ["Today's Revenue", `$${summary.todayRevenue.toFixed(2)}`],
+      ['Total Gross Revenue', formatPrice(summary.totalRevenue)],
+      ["Today's Revenue", formatPrice(summary.todayRevenue)],
       ['Total Completed Orders', `${summary.totalOrders}`],
-      ['Average Order Value (AOV)', `$${summary.averageOrderValue.toFixed(2)}`],
-      ['Estimated Gross Profit', `$${summary.grossProfit.toFixed(2)} (${summary.grossMarginPercentage}%)`],
-      ['Sales Tax Collected', `$${summary.totalTaxCollected.toFixed(2)}`]
+      ['Average Order Value (AOV)', formatPrice(summary.averageOrderValue)],
+      ['Estimated Gross Profit', `${formatPrice(summary.grossProfit)} (${summary.grossMarginPercentage}%)`],
+      ['Sales Tax Collected', formatPrice(summary.totalTaxCollected)]
     ];
 
     autoTable(doc, {
@@ -71,7 +73,7 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
       it.sku,
       it.name,
       it.quantity.toString(),
-      `$${it.revenue.toFixed(2)}`
+      formatPrice(it.revenue)
     ]);
 
     autoTable(doc, {
@@ -90,7 +92,7 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
 
     const paymentRows = paymentBreakdown.map((p: any) => [
       p.method.replace('_', ' '),
-      `$${p.amount.toFixed(2)}`,
+      formatPrice(p.amount),
       `${p.percentage}%`
     ]);
 
@@ -207,7 +209,7 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
             <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-3.5">
               <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Gross Sales (Today)</div>
               <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">
-                ${summary.todayRevenue.toFixed(2)}
+                {formatPrice(summary.todayRevenue)}
               </div>
               <div className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">
                 {summary.todayOrders} completed transactions
@@ -220,17 +222,17 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
                 {summary.grossMarginPercentage}%
               </div>
               <div className="text-[10px] text-slate-500 mt-1">
-                ${summary.grossProfit.toFixed(2)} net profit
+                {formatPrice(summary.grossProfit)} net profit
               </div>
             </div>
 
             <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-3.5">
               <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Avg. Order Value</div>
               <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">
-                ${summary.averageOrderValue.toFixed(2)}
+                {formatPrice(summary.averageOrderValue)}
               </div>
               <div className="text-[10px] text-slate-500 mt-1">
-                ${summary.totalTaxCollected.toFixed(2)} sales tax
+                {formatPrice(summary.totalTaxCollected)} sales tax
               </div>
             </div>
           </div>
@@ -258,7 +260,7 @@ export const DailyReportModal: React.FC<DailyReportModalProps> = ({
                       <td className="py-2 px-3 text-center font-mono text-slate-400 text-[11px]">{p.sku}</td>
                       <td className="py-2 px-3 text-right text-slate-600 dark:text-slate-300">{p.quantity}</td>
                       <td className="py-2 px-3 text-right font-semibold text-slate-900 dark:text-white">
-                        ${p.revenue.toFixed(2)}
+                        {formatPrice(p.revenue)}
                       </td>
                     </tr>
                   ))}

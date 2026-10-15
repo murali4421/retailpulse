@@ -32,10 +32,15 @@ export const COUNTRY_CONFIGS: CountryConfig[] = [
   { code: 'NO', name: 'Norway',           flag: '🇳🇴', currencyCode: 'NOK', currencySymbol: 'kr',  currencyName: 'Norwegian Krone',  defaultTaxRate: 0.25,  taxLabel: 'MVA'            },
 ];
 
+export const CURRENCY_OPTIONS = COUNTRY_CONFIGS.filter(
+  (country, index, countries) => countries.findIndex(option => option.currencyCode === country.currencyCode) === index
+);
+
 export type DiscountType = 'AMOUNT' | 'PERCENTAGE';
 
 export interface PosSettings {
   countryCode: string;
+  currencyCode: string;
   taxRate: number;           // decimal
   taxLabel: string;
   isTaxInclusive: boolean;
@@ -54,6 +59,7 @@ interface PosSettingsContextValue {
 
 const DEFAULT_SETTINGS: PosSettings = {
   countryCode: 'US',
+  currencyCode: 'USD',
   taxRate: 0.085,
   taxLabel: 'Sales Tax',
   isTaxInclusive: false,
@@ -67,13 +73,24 @@ export const PosSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [settings, setSettings] = useState<PosSettings>(() => {
     try {
       const stored = localStorage.getItem('rp_pos_settings');
-      return stored ? { ...DEFAULT_SETTINGS, ...JSON.parse(stored) } : DEFAULT_SETTINGS;
+      if (!stored) return DEFAULT_SETTINGS;
+
+      const parsed = JSON.parse(stored) as Partial<PosSettings>;
+      const legacyCurrency = COUNTRY_CONFIGS.find(country => country.code === parsed.countryCode)?.currencyCode;
+      const currencyCode = parsed.currencyCode ?? legacyCurrency ?? DEFAULT_SETTINGS.currencyCode;
+      const isSupportedCurrency = CURRENCY_OPTIONS.some(option => option.currencyCode === currencyCode);
+      return {
+        ...DEFAULT_SETTINGS,
+        ...parsed,
+        currencyCode: isSupportedCurrency ? currencyCode : DEFAULT_SETTINGS.currencyCode
+      };
     } catch {
       return DEFAULT_SETTINGS;
     }
   });
 
   const country = COUNTRY_CONFIGS.find(c => c.code === settings.countryCode) ?? COUNTRY_CONFIGS[0];
+  const currency = CURRENCY_OPTIONS.find(option => option.currencyCode === settings.currencyCode) ?? CURRENCY_OPTIONS[0];
 
   useEffect(() => {
     try {
@@ -97,10 +114,13 @@ export const PosSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   const formatPrice = (amount: number) => {
-    const sym = country.currencySymbol;
+    const sym = currency.currencySymbol;
     // JPY and KRW have no decimal places
-    const noDecimals = ['JPY', 'KRW'].includes(country.currencyCode);
-    const formatted = noDecimals ? Math.round(amount).toLocaleString() : amount.toFixed(2);
+    const noDecimals = ['JPY', 'KRW'].includes(currency.currencyCode);
+    const formatted = amount.toLocaleString(undefined, {
+      minimumFractionDigits: noDecimals ? 0 : 2,
+      maximumFractionDigits: noDecimals ? 0 : 2
+    });
     return `${sym}${formatted}`;
   };
 
@@ -109,8 +129,8 @@ export const PosSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       value={{
         settings,
         country,
-        currencySymbol: country.currencySymbol,
-        currencyCode: country.currencyCode,
+        currencySymbol: currency.currencySymbol,
+        currencyCode: currency.currencyCode,
         updateSettings,
         formatPrice
       }}

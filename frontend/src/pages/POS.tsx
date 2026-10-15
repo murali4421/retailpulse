@@ -3,6 +3,7 @@ import { api, type Product, type SaleTransaction } from '../services/api';
 import { offlineDb } from '../services/offlineDb';
 import { syncManager } from '../services/syncManager';
 import { useAuth } from '../services/authContext';
+import { usePosSettings } from '../services/posSettingsContext';
 import { BarcodeScannerModal } from '../components/BarcodeScannerModal';
 import {
   Barcode,
@@ -22,6 +23,7 @@ import {
 
 export const POS: React.FC = () => {
   const { user, activeStoreId } = useAuth();
+  const { formatPrice } = usePosSettings();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -364,7 +366,7 @@ export const POS: React.FC = () => {
 
                     <div className="mt-3 flex items-center justify-between">
                       <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
-                        ${prod.retailPrice.toFixed(2)}
+                        {formatPrice(prod.retailPrice)}
                       </span>
                       <span className="text-[11px] text-slate-400">
                         Available: <span className="font-semibold text-slate-700 dark:text-slate-300">{availableStock}</span>
@@ -417,7 +419,7 @@ export const POS: React.FC = () => {
                     {item.product.name}
                   </h5>
                   <div className="text-[11px] text-slate-400 mt-0.5">
-                    ${item.price.toFixed(2)} each
+                    {formatPrice(item.price)} each
                   </div>
                 </div>
 
@@ -442,7 +444,7 @@ export const POS: React.FC = () => {
                   </div>
 
                   <span className="font-semibold text-xs text-slate-900 dark:text-white min-w-[50px] text-right">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    {formatPrice(item.price * item.quantity)}
                   </span>
 
                   <button
@@ -462,21 +464,21 @@ export const POS: React.FC = () => {
           <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span className="font-medium text-slate-900 dark:text-white">${subtotal.toFixed(2)}</span>
+              <span className="font-medium text-slate-900 dark:text-white">{formatPrice(subtotal)}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
                 <span>Discount</span>
-                <span>-${discount.toFixed(2)}</span>
+                <span>-{formatPrice(discount)}</span>
               </div>
             )}
             <div className="flex justify-between">
               <span>Sales Tax (8.5%)</span>
-              <span className="font-medium text-slate-900 dark:text-white">${tax.toFixed(2)}</span>
+              <span className="font-medium text-slate-900 dark:text-white">{formatPrice(tax)}</span>
             </div>
             <div className="flex justify-between text-sm font-bold text-slate-900 dark:text-white pt-1 border-t border-slate-200 dark:border-slate-800">
               <span>Total Amount</span>
-              <span className="text-indigo-600 dark:text-indigo-400">${total.toFixed(2)}</span>
+              <span className="text-indigo-600 dark:text-indigo-400">{formatPrice(total)}</span>
             </div>
           </div>
 
@@ -523,7 +525,7 @@ export const POS: React.FC = () => {
             disabled={cart.length === 0 || submitting}
             className="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3 text-sm shadow-md shadow-emerald-600/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
-            {submitting ? 'Processing Transaction...' : `Charge $${total.toFixed(2)}`}
+            {submitting ? 'Processing Transaction...' : `Charge ${formatPrice(total)}`}
           </button>
         </div>
       </div>
@@ -558,7 +560,7 @@ export const POS: React.FC = () => {
                 {completedSale.items.map((it, idx) => (
                   <div key={idx} className="flex justify-between text-[11px]">
                     <span>{it.quantity}x {it.name}</span>
-                    <span>${it.lineTotal.toFixed(2)}</span>
+                    <span>{formatPrice(it.lineTotal)}</span>
                   </div>
                 ))}
               </div>
@@ -566,15 +568,15 @@ export const POS: React.FC = () => {
               <div className="space-y-0.5 pt-1 text-[11px]">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span>${completedSale.subtotal.toFixed(2)}</span>
+                  <span>{formatPrice(completedSale.subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Tax (8.5%):</span>
-                  <span>${completedSale.tax.toFixed(2)}</span>
+                  <span>{formatPrice(completedSale.tax)}</span>
                 </div>
                 <div className="flex justify-between font-bold text-slate-900 dark:text-white pt-1">
                   <span>TOTAL PAID:</span>
-                  <span>${completedSale.total.toFixed(2)}</span>
+                  <span>{formatPrice(completedSale.total)}</span>
                 </div>
                 <div className="flex justify-between text-[10px] text-slate-500">
                   <span>Method:</span>

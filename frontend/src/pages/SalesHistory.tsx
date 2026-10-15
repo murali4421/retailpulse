@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api, type SaleTransaction, type Store } from '../services/api';
 import { useAuth } from '../services/authContext';
+import { usePosSettings } from '../services/posSettingsContext';
 import { DailyReportModal } from '../components/DailyReportModal';
 import {
   Receipt,
@@ -20,6 +21,7 @@ import {
 
 export const SalesHistory: React.FC = () => {
   const { activeStoreId, hasPermission } = useAuth();
+  const { formatPrice } = usePosSettings();
   const [sales, setSales] = useState<SaleTransaction[]>([]);
   const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
@@ -248,15 +250,15 @@ export const SalesHistory: React.FC = () => {
                     </td>
 
                     <td className="py-3 px-4 text-right font-mono text-slate-500">
-                      ${sale.subtotal.toFixed(2)}
+                      {formatPrice(sale.subtotal)}
                     </td>
 
                     <td className="py-3 px-4 text-right font-mono text-slate-500">
-                      ${sale.tax.toFixed(2)}
+                      {formatPrice(sale.tax)}
                     </td>
 
                     <td className="py-3 px-4 text-right font-mono font-bold text-slate-900 dark:text-white">
-                      ${sale.total.toFixed(2)}
+                      {formatPrice(sale.total)}
                     </td>
 
                     <td className="py-3 px-4 text-center">
@@ -344,7 +346,7 @@ export const SalesHistory: React.FC = () => {
                       <span className="font-medium text-slate-900 dark:text-white">{it.quantity}x {it.name}</span>
                       <span className="font-mono text-[10px] text-slate-400 block">{it.sku}</span>
                     </div>
-                    <span className="font-bold text-slate-900 dark:text-white">${it.lineTotal.toFixed(2)}</span>
+                    <span className="font-bold text-slate-900 dark:text-white">{formatPrice(it.lineTotal)}</span>
                   </div>
                 ))}
               </div>
@@ -352,15 +354,15 @@ export const SalesHistory: React.FC = () => {
               <div className="space-y-1 pt-1 font-mono text-xs">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span>${selectedSale.subtotal.toFixed(2)}</span>
+                  <span>{formatPrice(selectedSale.subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Tax:</span>
-                  <span>${selectedSale.tax.toFixed(2)}</span>
+                  <span>{formatPrice(selectedSale.tax)}</span>
                 </div>
                 <div className="flex justify-between font-bold text-sm text-slate-900 dark:text-white pt-1 border-t border-slate-200 dark:border-slate-700">
                   <span>Total:</span>
-                  <span className="text-indigo-600 dark:text-indigo-400">${selectedSale.total.toFixed(2)}</span>
+                  <span className="text-indigo-600 dark:text-indigo-400">{formatPrice(selectedSale.total)}</span>
                 </div>
               </div>
             </div>
@@ -391,7 +393,7 @@ export const SalesHistory: React.FC = () => {
 
             <form onSubmit={handleRefund} className="space-y-3 text-xs">
               <p className="text-slate-600 dark:text-slate-300">
-                Refunding <strong className="text-slate-900 dark:text-white font-mono">{refundModalSale.receiptNumber}</strong> will return <strong>${refundModalSale.total.toFixed(2)}</strong> to the customer and restock all line items back into the active store inventory.
+                Refunding <strong className="text-slate-900 dark:text-white font-mono">{refundModalSale.receiptNumber}</strong> will return <strong>{formatPrice(refundModalSale.total)}</strong> to the customer and restock all line items back into the active store inventory.
               </p>
 
               <div>

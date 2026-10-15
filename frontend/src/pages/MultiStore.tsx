@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { api, type Store } from '../services/api';
 import { useAuth } from '../services/authContext';
+import { usePosSettings } from '../services/posSettingsContext';
 import {
   Network,
   Store as StoreIcon,
   Plus,
   RefreshCw,
-  CheckCircle,
   MapPin,
   Phone,
-  DollarSign,
   Boxes,
   AlertTriangle,
   X
@@ -17,6 +16,7 @@ import {
 
 export const MultiStore: React.FC = () => {
   const { user, activeStoreId, setActiveStoreId } = useAuth();
+  const { formatPrice } = usePosSettings();
   const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncingId, setSyncingId] = useState<string | null>(null);
@@ -146,7 +146,7 @@ export const MultiStore: React.FC = () => {
                   <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/40">
                     <span className="text-[10px] text-slate-400 block">Total Revenue</span>
                     <span className="font-bold text-slate-900 dark:text-white font-mono">
-                      ${store.revenue?.toFixed(2) ?? '0.00'}
+                      {formatPrice(store.revenue ?? 0)}
                     </span>
                   </div>
                   <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/40">
