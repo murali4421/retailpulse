@@ -98,7 +98,21 @@ export const POS: React.FC = () => {
     }
   };
 
+  const getProductStock = (product: Product) =>
+    product.currentStock ?? product.stockByStore?.[activeStoreId] ?? 0;
+
+  const getCartQuantity = (productId: string) =>
+    cart.find(item => item.product.id === productId)?.quantity ?? 0;
+
   const addToCart = (product: Product) => {
+    const stock = getProductStock(product);
+    const quantityInCart = getCartQuantity(product.id);
+    if (quantityInCart >= stock) {
+      setCheckoutError(`Only ${stock} ${stock === 1 ? 'unit is' : 'units are'} available for ${product.name}.`);
+      return;
+    }
+
+    setCheckoutError(null);
     setCart(prev => {
       const idx = prev.findIndex(item => item.product.id === product.id);
       if (idx >= 0) {
@@ -111,6 +125,13 @@ export const POS: React.FC = () => {
   };
 
   const updateQuantity = (productId: string, delta: number) => {
+    const item = cart.find(cartItem => cartItem.product.id === productId);
+    if (item && delta > 0 && item.quantity + delta > getProductStock(item.product)) {
+      setCheckoutError(`Only ${getProductStock(item.product)} ${getProductStock(item.product) === 1 ? 'unit is' : 'units are'} available for ${item.product.name}.`);
+      return;
+    }
+
+    setCheckoutError(null);
     setCart(prev => {
       return prev
         .map(item => {
@@ -303,9 +324,10 @@ export const POS: React.FC = () => {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
               {filteredProducts.map((prod) => {
-                const stock = prod.currentStock ?? (prod.stockByStore?.[activeStoreId] ?? 0);
-                const isLow = stock <= prod.minAlertThreshold;
-                const isOutOfStock = stock <= 0;
+                const stock = getProductStock(prod);
+                const availableStock = Math.max(0, stock - getCartQuantity(prod.id));
+                const isLow = availableStock <= prod.minAlertThreshold;
+                const isOutOfStock = availableStock <= 0;
 
                 return (
                   <button
@@ -330,7 +352,7 @@ export const POS: React.FC = () => {
                         )}
                         {isOutOfStock && (
                           <span className="rounded bg-rose-50 dark:bg-rose-950/60 px-1.5 py-0.2 text-[9px] font-bold text-rose-600 dark:text-rose-400">
-                            Sold Out
+                            {stock > 0 ? 'In Cart' : 'Sold Out'}
                           </span>
                         )}
                       </div>
@@ -345,7 +367,7 @@ export const POS: React.FC = () => {
                         ${prod.retailPrice.toFixed(2)}
                       </span>
                       <span className="text-[11px] text-slate-400">
-                        Stock: <span className="font-semibold text-slate-700 dark:text-slate-300">{stock}</span>
+                        Available: <span className="font-semibold text-slate-700 dark:text-slate-300">{availableStock}</span>
                       </span>
                     </div>
                   </button>
@@ -412,7 +434,8 @@ export const POS: React.FC = () => {
                     </span>
                     <button
                       onClick={() => updateQuantity(item.product.id, 1)}
-                      className="p-1 text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                      disabled={item.quantity >= getProductStock(item.product)}
+                      className="p-1 text-slate-500 hover:text-slate-800 dark:hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       <Plus className="h-3 w-3" />
                     </button>
@@ -489,6 +512,12 @@ export const POS: React.FC = () => {
           </div>
 
           {/* Checkout Button */}
+          {checkoutError && (
+            <div role="alert" className="flex items-center gap-2 rounded-lg bg-rose-50 dark:bg-rose-950/40 px-3 py-2 text-xs text-rose-700 dark:text-rose-300">
+              <AlertTriangle className="h-4 w-4 shrink-0" />
+              <span>{checkoutError}</span>
+            </div>
+          )}
           <button
             onClick={handleCheckout}
             disabled={cart.length === 0 || submitting}
