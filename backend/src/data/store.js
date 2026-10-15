@@ -12,7 +12,8 @@ export const database = {
   inventory: [],
   sales: [],
   reorders: [],
-  complianceRecords: []
+  complianceRecords: [],
+  systemSettings: { currencyCode: 'USD' }
 };
 
 // WebSocket broadcaster hook
@@ -51,8 +52,10 @@ export function saveDatabase() {
     const dir = path.dirname(DB_PATH);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(DB_PATH, JSON.stringify(database, null, 2), 'utf8');
+    return true;
   } catch (err) {
     console.error('Error persisting database:', err.message);
+    return false;
   }
 }
 

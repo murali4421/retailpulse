@@ -243,6 +243,17 @@ class ApiService {
     });
   }
 
+  async getSystemSettings() {
+    return this.request<{ currencyCode: string }>('/settings');
+  }
+
+  async updateCurrency(currencyCode: string) {
+    return this.request<{ currencyCode: string }>('/settings/currency', {
+      method: 'PUT',
+      body: JSON.stringify({ currencyCode })
+    });
+  }
+
   // ---------------- INVENTORY ----------------
   async getInventory(storeId = 'LOC-001', lowStockOnly = false, search = '', category = 'All') {
     const q = new URLSearchParams({

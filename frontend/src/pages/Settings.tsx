@@ -98,7 +98,12 @@ export const Settings: React.FC = () => {
           <select
             id="currency-select"
             value={settings.currencyCode}
-            onChange={event => updateSettings({ currencyCode: event.target.value })}
+            disabled={user?.role !== 'super_admin'}
+            onChange={event => {
+              updateSettings({ currencyCode: event.target.value }).catch(error => {
+                alert(`Failed to update currency: ${error.message}`);
+              });
+            }}
             className="w-full sm:w-auto min-w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white"
           >
             {COUNTRY_CONFIGS.map(currency => (
@@ -107,7 +112,10 @@ export const Settings: React.FC = () => {
               </option>
             ))}
           </select>
-          <span className="text-xs text-slate-500">Preview: {formatPrice(1234.56)}</span>
+          <span className="text-xs text-slate-500">
+            Preview: {formatPrice(1234.56)}
+            {user?.role !== 'super_admin' && ' · Only a super admin can change this setting'}
+          </span>
         </div>
       </div>
 

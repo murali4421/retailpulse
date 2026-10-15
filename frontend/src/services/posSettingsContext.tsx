@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { api } from './api';
+import { useAuth } from './authContext';
 
 export interface CountryConfig {
   code: string;
@@ -53,7 +55,7 @@ interface PosSettingsContextValue {
   country: CountryConfig;
   currencySymbol: string;
   currencyCode: string;
-  updateSettings: (patch: Partial<PosSettings>) => void;
+  updateSettings: (patch: Partial<PosSettings>) => Promise<void>;
   formatPrice: (amount: number) => string;
 }
 
@@ -70,6 +72,7 @@ const DEFAULT_SETTINGS: PosSettings = {
 const PosSettingsContext = createContext<PosSettingsContextValue | null>(null);
 
 export const PosSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [settings, setSettings] = useState<PosSettings>(() => {
     try {
       const stored = localStorage.getItem('rp_pos_settings');
@@ -98,7 +101,49 @@ export const PosSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch { /* storage unavailable */ }
   }, [settings]);
 
-  const updateSettings = (patch: Partial<PosSettings>) => {
+  useEffect(() => {
+    if (!user) return;
+
+    let isActive = true;
+    const applyCurrency = (currencyCode: string) => {
+      if (!CURRENCY_OPTIONS.some(option => option.currencyCode === currencyCode)) {
+        console.error(`Unsupported currency received from server: ${currencyCode}`);
+        return;
+      }
+      setSettings(prev => ({ ...prev, currencyCode }));
+    };
+
+    const unsubscribe = api.subscribeToLiveEvents(event => {
+      if (event.type === 'SYSTEM_SETTINGS_UPDATED' && event.data?.currencyCode) {
+        applyCurrency(event.data.currencyCode);
+      }
+    });
+
+    api.getSystemSettings()
+      .then(({ currencyCode }) => {
+        if (isActive) applyCurrency(currencyCode);
+      })
+      .catch(error => {
+        console.error('Failed to load shared system settings:', error);
+      });
+
+    return () => {
+      isActive = false;
+      unsubscribe();
+    };
+  }, [user?.id]);
+
+  const updateSettings = async (patch: Partial<PosSettings>) => {
+    const currencyCode = patch.currencyCode;
+    if (currencyCode !== undefined && currencyCode !== settings.currencyCode) {
+      if (!CURRENCY_OPTIONS.some(option => option.currencyCode === currencyCode)) {
+        throw new Error('Select a supported currency.');
+      }
+      const result = await api.updateCurrency(currencyCode);
+      setSettings(prev => ({ ...prev, currencyCode: result.currencyCode }));
+      return;
+    }
+
     setSettings(prev => {
       const next = { ...prev, ...patch };
       // If country changed, auto-update tax defaults

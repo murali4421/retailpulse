@@ -10,6 +10,7 @@ import * as auditCtrl from '../controllers/auditController.js';
 import * as compCtrl from '../controllers/complianceController.js';
 import * as backupCtrl from '../controllers/backupController.js';
 import * as storeCtrl from '../controllers/storeController.js';
+import * as settingsCtrl from '../controllers/settingsController.js';
 
 const router = Router();
 
@@ -67,6 +68,9 @@ router.post('/compliance/erasure', authenticate, requireRole('super_admin'), com
 // ==========================================
 // 6. Multi-Store Management & Cloud Sync
 // ==========================================
+router.get('/settings', authenticate, settingsCtrl.getSystemSettings);
+router.put('/settings/currency', authenticate, requireRole('super_admin'), settingsCtrl.updateCurrency);
+
 router.get('/stores', authenticate, storeCtrl.getStores);
 router.post('/stores', authenticate, requireRole('super_admin'), storeCtrl.createStore);
 router.post('/stores/:storeId/sync', authenticate, storeCtrl.syncStoreHeartbeat);
