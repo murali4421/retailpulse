@@ -25,7 +25,18 @@ export function authenticate(req, res, next) {
     return res.status(403).json({ error: 'Account has been suspended' });
   }
 
-  req.user = decoded;
+  req.user = user
+    ? {
+        ...decoded,
+        id: user.id,
+        sub: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        storeId: user.storeId,
+        permissions: user.permissions ?? decoded.permissions ?? []
+      }
+    : decoded;
   next();
 }
 
