@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../services/authContext';
 import { MfaModal } from '../components/MfaModal';
-import { CURRENCY_OPTIONS, usePosSettings } from '../services/posSettingsContext';
+import { COUNTRY_CONFIGS, usePosSettings } from '../services/posSettingsContext';
 import {
   Settings as SettingsIcon,
   Shield,
@@ -21,7 +21,7 @@ import {
 
 export const Settings: React.FC = () => {
   const { user } = useAuth();
-  const { settings, currencySymbol, updateSettings } = usePosSettings();
+  const { settings, formatPrice, updateSettings } = usePosSettings();
   const [backups, setBackups] = useState<any[]>([]);
   const [loadingBackups, setLoadingBackups] = useState(false);
   const [creatingBackup, setCreatingBackup] = useState(false);
@@ -101,13 +101,13 @@ export const Settings: React.FC = () => {
             onChange={event => updateSettings({ currencyCode: event.target.value })}
             className="w-full sm:w-auto min-w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs text-slate-900 dark:text-white"
           >
-            {CURRENCY_OPTIONS.map(currency => (
+            {COUNTRY_CONFIGS.map(currency => (
               <option key={currency.currencyCode} value={currency.currencyCode}>
                 {currency.currencyCode} ({currency.currencySymbol}) — {currency.currencyName}
               </option>
             ))}
           </select>
-          <span className="text-xs text-slate-500">Preview: {currencySymbol}1,234.56</span>
+          <span className="text-xs text-slate-500">Preview: {formatPrice(1234.56)}</span>
         </div>
       </div>
 

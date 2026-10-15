@@ -32,7 +32,7 @@ export const COUNTRY_CONFIGS: CountryConfig[] = [
   { code: 'NO', name: 'Norway',           flag: '🇳🇴', currencyCode: 'NOK', currencySymbol: 'kr',  currencyName: 'Norwegian Krone',  defaultTaxRate: 0.25,  taxLabel: 'MVA'            },
 ];
 
-export const CURRENCY_OPTIONS = COUNTRY_CONFIGS.filter(
+const CURRENCY_OPTIONS = COUNTRY_CONFIGS.filter(
   (country, index, countries) => countries.findIndex(option => option.currencyCode === country.currencyCode) === index
 );
 

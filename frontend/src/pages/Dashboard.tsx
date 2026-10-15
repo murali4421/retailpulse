@@ -43,7 +43,37 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [storeName, setStoreName] = useState('Store');
 
-  // Check permission
+  useEffect(() => {
+    if (!hasPermission('reports:view')) return;
+
+    const loadDashboard = async () => {
+      try {
+        setLoading(true);
+        const summaryRes = await api.getSalesAnalyticsSummary(activeStoreId);
+        setData(summaryRes);
+
+        const stores = await api.getStores();
+        const current = stores.find(s => s.id === activeStoreId);
+        setStoreName(current ? current.name : 'All Stores (Aggregate)');
+      } catch (err) {
+        console.error('Failed to load dashboard data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDashboard();
+
+    // Listen for live sales or inventory events
+    const unsub = api.subscribeToLiveEvents((event) => {
+      if (event.type === 'SALE_COMPLETED' || event.type === 'STOCK_CHANGED') {
+        loadDashboard();
+      }
+    });
+
+    return () => unsub();
+  }, [activeStoreId, hasPermission]);
+
   if (!hasPermission('reports:view')) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
@@ -58,35 +88,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
       </div>
     );
   }
-
-  const loadDashboard = async () => {
-    try {
-      setLoading(true);
-      const summaryRes = await api.getSalesAnalyticsSummary(activeStoreId);
-      setData(summaryRes);
-
-      const stores = await api.getStores();
-      const current = stores.find(s => s.id === activeStoreId);
-      setStoreName(current ? current.name : 'All Stores (Aggregate)');
-    } catch (err) {
-      console.error('Failed to load dashboard data:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadDashboard();
-
-    // Listen for live sales or inventory events
-    const unsub = api.subscribeToLiveEvents((event) => {
-      if (event.type === 'SALE_COMPLETED' || event.type === 'STOCK_CHANGED') {
-        loadDashboard();
-      }
-    });
-
-    return () => unsub();
-  }, [activeStoreId]);
 
   if (loading && !data) {
     return (
