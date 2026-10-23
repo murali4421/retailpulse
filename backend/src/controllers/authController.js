@@ -4,6 +4,8 @@ import { generateUserTokens, exchangeCodeForTokens, createAuthorizationCode, IDP
 import { generateMfaSecret, verifyMfaToken } from '../services/mfaService.js';
 import { recordAuditEvent } from '../services/auditService.js';
 
+const defaultRedirectUri = `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/$/, '')}/auth/callback`;
+
 // Standard Login
 export async function login(req, res) {
   try {
@@ -120,7 +122,7 @@ export async function oauthAuthorize(req, res) {
     const user = database.users.find(u => u.email.toLowerCase() === targetEmail.toLowerCase()) || database.users[0];
 
     // Issue authorization code
-    const authCode = createAuthorizationCode(user, redirect_uri || 'http://localhost:5173/auth/callback', state || 'state123');
+    const authCode = createAuthorizationCode(user, redirect_uri || defaultRedirectUri, state || 'state123');
 
     recordAuditEvent({
       eventType: 'OAUTH2_EVENT',
@@ -136,7 +138,7 @@ export async function oauthAuthorize(req, res) {
       provider: IDP_CONFIGS[provider]?.name || provider,
       code: authCode,
       state: state || 'sso-success',
-      redirect_uri: redirect_uri || 'http://localhost:5173/auth/callback',
+      redirect_uri: redirect_uri || defaultRedirectUri,
       user: {
         id: user.id,
         name: user.name,

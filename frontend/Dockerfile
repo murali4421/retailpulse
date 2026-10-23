@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+ARG VITE_API_URL=http://localhost:4000/api
+ARG VITE_WS_URL=ws://localhost:4000/ws
+
 COPY . .
 RUN npm run build
 

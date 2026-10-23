@@ -102,6 +102,7 @@ npm install
 npm start
 ```
 *Backend runs at `http://localhost:4000` with WebSocket at `ws://localhost:4000/ws`.*
+*For production, configure `PORT`, `NODE_ENV`, `JWT_SECRET`, `ENCRYPTION_MASTER_KEY`, `CORS_ORIGIN`, and `FRONTEND_URL` in the hosting provider. Production startup requires both secrets.*
 
 ### 2. Launch Frontend SPA
 ```bash
@@ -110,6 +111,7 @@ npm install
 npm run dev
 ```
 *Frontend opens at `http://localhost:5173`.*
+*For a separately hosted production frontend, set `VITE_API_URL` (for example, `https://api.example.com/api`) and `VITE_WS_URL` (for example, `wss://api.example.com/ws`) before `npm run build`, then publish `dist`. These are build-time settings, not secrets.*
 
 ### 3. Launch Electron Desktop App
 ```bash
@@ -120,6 +122,19 @@ npm run electron:dev
 ```bash
 docker-compose up -d --build
 ```
+Compose reads its variables from the shell or a root `.env` file. Set at least:
+```dotenv
+JWT_SECRET=<long-random-secret>
+ENCRYPTION_MASTER_KEY=<different-long-random-secret>
+```
+It defaults the browser-facing API and WebSocket URLs to `http://localhost:4000/api` and `ws://localhost:4000/ws`, and the allowed frontend origin to `http://localhost:5173`. Override these for custom domains/ports:
+```dotenv
+VITE_API_URL=https://api.example.com/api
+VITE_WS_URL=wss://api.example.com/ws
+CORS_ORIGIN=https://shop.example.com
+FRONTEND_URL=https://shop.example.com
+```
+`VITE_API_URL` and `VITE_WS_URL` are passed as Docker build arguments, so rebuild the frontend image after changing them. `CORS_ORIGIN` may contain comma-separated origins. For standalone hosting, use the same variables in each service's environment; the backend loads `backend/.env` when run from that directory. Persist `backend/src/data` on the backend host because the JSON database, audit log, and backups are file-based.
 
 ---
 

@@ -1,4 +1,4 @@
-import { api } from './api';
+import { API_BASE_URL, api } from './api';
 import { offlineDb, type OfflineSaleRecord } from './offlineDb';
 
 type SyncListener = (state: {
@@ -48,7 +48,7 @@ class SyncManager {
 
       // Check if backend is reachable
       try {
-        const res = await fetch('http://localhost:4000/api/health', { method: 'GET', cache: 'no-store' });
+        const res = await fetch(`${API_BASE_URL}/health`, { method: 'GET', cache: 'no-store' });
         const reachable = res.ok;
         if (reachable !== this.isOnline) {
           this.isOnline = reachable;

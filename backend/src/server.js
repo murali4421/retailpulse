@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -12,6 +13,18 @@ import { initBackupService } from './services/backupService.js';
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
+const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+if (process.env.NODE_ENV === 'production') {
+  for (const name of ['JWT_SECRET', 'ENCRYPTION_MASTER_KEY']) {
+    if (!process.env[name]) {
+      throw new Error(`${name} must be configured in production`);
+    }
+  }
+}
 
 // Security Middleware
 app.use(helmet({
@@ -20,7 +33,9 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => {
+    callback(null, !origin || corsOrigins.includes(origin));
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));

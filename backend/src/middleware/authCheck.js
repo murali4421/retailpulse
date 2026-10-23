@@ -19,24 +19,27 @@ export function authenticate(req, res, next) {
     return res.status(401).json({ error: 'Invalid or expired access token' });
   }
 
-  // Find user in database to ensure account is active
-  const user = database.users.find(u => u.id === (decoded.sub || decoded.id));
+  // Resolve current account details so role changes take effect without a new token.
+  const user = database.users.find(u => u.id === (decoded.sub || decoded.id))
+    ?? database.users.find(u => u.email === decoded.email);
+  if (!user) {
+    return res.status(401).json({ error: 'User account could not be found' });
+  }
+
   if (user && user.status === 'suspended') {
     return res.status(403).json({ error: 'Account has been suspended' });
   }
 
-  req.user = user
-    ? {
-        ...decoded,
-        id: user.id,
-        sub: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        storeId: user.storeId,
-        permissions: user.permissions ?? decoded.permissions ?? []
-      }
-    : decoded;
+  req.user = {
+    ...decoded,
+    id: user.id,
+    sub: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    storeId: user.storeId,
+    permissions: user.permissions ?? decoded.permissions ?? []
+  };
   next();
 }
 
