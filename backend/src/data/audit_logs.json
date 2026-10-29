@@ -1,4 +1,41 @@
-﻿{
-  "auditLogs": [],
+{
+  "auditLogs": [
+    {
+      "id": "aud_bb9c506e",
+      "timestamp": "2026-10-29T14:53:43.442Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_8193a0f5",
+      "timestamp": "2026-10-29T14:38:36.342Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    }
+  ],
   "securityAlerts": []
 }

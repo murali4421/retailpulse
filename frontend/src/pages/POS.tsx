@@ -25,6 +25,7 @@ export const POS: React.FC = () => {
   const { user, activeStoreId } = useAuth();
   const { formatPrice } = usePosSettings();
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,20 +49,31 @@ export const POS: React.FC = () => {
   const loadCatalog = async () => {
     try {
       setLoading(true);
-      const isOnline = syncManager.getOnlineStatus();
-      if (isOnline) {
-        const prods = await api.getInventory(activeStoreId, false);
-        setProducts(prods);
-        // Cache in Dexie for offline use
-        await offlineDb.cacheAllProducts(prods as any);
-      } else {
-        const cached = await offlineDb.cachedProducts.toArray();
-        setProducts(cached as any);
-      }
+      const [categoryList, inventoryData] = await Promise.all([
+        api.getInventoryCategories(),
+        (async () => {
+          const isOnline = syncManager.getOnlineStatus();
+          if (isOnline) {
+            const prods = await api.getInventory(activeStoreId, false);
+            await offlineDb.cacheAllProducts(prods as any);
+            return prods;
+          }
+          const cached = await offlineDb.cachedProducts.toArray();
+          return cached as any;
+        })()
+      ]);
+      setCategories(categoryList);
+      setProducts(inventoryData);
     } catch (err) {
       console.warn('Loading catalog from offline cache due to network error:', err);
       const cached = await offlineDb.cachedProducts.toArray();
       setProducts(cached as any);
+      try {
+        const categoryList = await api.getInventoryCategories();
+        setCategories(categoryList);
+      } catch {
+        setCategories(['All', 'General']);
+      }
     } finally {
       setLoading(false);
     }
@@ -251,7 +263,7 @@ export const POS: React.FC = () => {
   };
 
   // Filter products by category and search
-  const categories = ['All', 'Beverages', 'Bakery', 'Grocery', 'Merchandise', 'Confectionery'];
+  const categoryOptions = ['All', ...categories];
   const filteredProducts = products.filter(p => {
     const matchCat = selectedCategory === 'All' || p.category.toLowerCase() === selectedCategory.toLowerCase();
     const matchQuery =
@@ -298,7 +310,7 @@ export const POS: React.FC = () => {
 
         {/* Category Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none">
-          {categories.map((cat) => (
+          {categoryOptions.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}

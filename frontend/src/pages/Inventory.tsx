@@ -24,10 +24,12 @@ export const Inventory: React.FC = () => {
   const { formatPrice, currencySymbol } = usePosSettings();
   const [products, setProducts] = useState<Product[]>([]);
   const [stores, setStores] = useState<Store[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [lowStockFilter, setLowStockFilter] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
 
   // Modals state
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -55,12 +57,17 @@ export const Inventory: React.FC = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [inv, storeList] = await Promise.all([
+      const [inv, storeList, categoryList] = await Promise.all([
         api.getInventory(activeStoreId, lowStockFilter, search, categoryFilter),
-        api.getStores()
+        api.getStores(),
+        api.getInventoryCategories()
       ]);
       setProducts(inv);
       setStores(storeList);
+      setCategories(categoryList);
+      if (categoryFilter !== 'All' && !categoryList.includes(categoryFilter)) {
+        setCategoryFilter('All');
+      }
     } catch (err) {
       console.error('Failed to load inventory:', err);
     } finally {
@@ -84,12 +91,29 @@ export const Inventory: React.FC = () => {
     setSearch(scannedCode);
   };
 
+  const handleCreateCategory = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    const trimmed = newCategoryName.trim();
+    if (!trimmed) return;
+
+    try {
+      const result = await api.createInventoryCategory(trimmed);
+      setCategories(prev => [...new Set([...prev, result.category])]);
+      setNewCategoryName('');
+      setSelectedProduct(prev => prev ? { ...prev, category: result.category } : prev);
+      setCategoryFilter('All');
+    } catch (err: any) {
+      alert(err.message || 'Failed to create category');
+    }
+  };
+
   const handleOpenAdd = () => {
+    const defaultCategory = categories[0] || 'General';
     setSelectedProduct({
       name: '',
       sku: 'SKU-' + Math.random().toString(36).substring(2, 6).toUpperCase(),
       barcode: '89012' + Math.floor(1000000 + Math.random() * 9000000),
-      category: 'Beverages',
+      category: defaultCategory,
       description: '',
       costPrice: 5.0,
       retailPrice: 9.99,
@@ -292,12 +316,26 @@ export const Inventory: React.FC = () => {
             className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none"
           >
             <option value="All">All Categories</option>
-            <option value="Beverages">Beverages</option>
-            <option value="Bakery">Bakery</option>
-            <option value="Grocery">Grocery</option>
-            <option value="Merchandise">Merchandise</option>
-            <option value="Confectionery">Confectionery</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))}
           </select>
+
+          <form onSubmit={handleCreateCategory} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              placeholder="New category"
+              className="w-32 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="rounded-xl bg-indigo-600 px-3 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+            >
+              Add Category
+            </button>
+          </form>
 
           {/* Low Stock Toggle Pill */}
           <button
@@ -555,15 +593,20 @@ export const Inventory: React.FC = () => {
                 <div>
                   <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1">Category</label>
                   <select
-                    value={selectedProduct.category}
+                    value={selectedProduct.category || categories[0] || 'General'}
                     onChange={(e) => setSelectedProduct(p => ({ ...p!, category: e.target.value }))}
                     className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2 text-slate-900 dark:text-white"
                   >
-                    <option value="Beverages">Beverages</option>
-                    <option value="Bakery">Bakery</option>
-                    <option value="Grocery">Grocery</option>
-                    <option value="Merchandise">Merchandise</option>
-                    <option value="Confectionery">Confectionery</option>
+                    {categories.length > 0 ? (
+                      categories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="General">General</option>
+                        <option value="Beverages">Beverages</option>
+                      </>
+                    )}
                   </select>
                 </div>
                 <div>

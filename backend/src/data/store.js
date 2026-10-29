@@ -13,6 +13,7 @@ export const database = {
   sales: [],
   reorders: [],
   complianceRecords: [],
+  categories: [],
   systemSettings: { currencyCode: 'USD' }
 };
 
@@ -31,10 +32,6 @@ export function broadcast(payload) {
 function normalizeStoreKey(value) {
   if (!value) return value;
   const mapping = {
-    'Demo-001': 'LOC-001',
-    'Demo-Shop-001': 'LOC-001',
-    'Demo Shop': 'LOC-001',
-    'Demo Store': 'LOC-001',
     'LOC-001': 'LOC-001',
     'ALL': 'ALL'
   };
@@ -51,6 +48,7 @@ function sanitizePortalData(data) {
     sales: [],
     reorders: [],
     complianceRecords: [],
+    categories: Array.isArray(data.categories) ? data.categories : [],
     systemSettings: { currencyCode: data.systemSettings?.currencyCode || 'INR' }
   };
 
@@ -74,7 +72,7 @@ function normalizePersistedDatabase(data) {
       const normalizedStore = { ...store };
       normalizedStore.id = normalizeStoreKey(normalizedStore.id);
       if (normalizedStore.id === 'LOC-001' && !normalizedStore.name) {
-        normalizedStore.name = 'Demo Store';
+        normalizedStore.name = 'Primary Store';
       }
       return normalizedStore;
     });
@@ -99,7 +97,7 @@ function normalizePersistedDatabase(data) {
     data.sales = data.sales.map((sale) => ({
       ...sale,
       storeId: normalizeStoreKey(sale.storeId),
-      storeName: sale.storeName || 'Demo Store'
+      storeName: sale.storeName || 'Primary Store'
     }));
   }
 
@@ -173,6 +171,14 @@ async function seedDatabase() {
   database.sales = [];
   database.reorders = [];
   database.complianceRecords = [];
+  database.categories = [
+    'Beverages',
+    'Bakery',
+    'Grocery',
+    'Merchandise',
+    'Confectionery',
+    'General'
+  ];
   database.systemSettings = { currencyCode: 'INR' };
 
   database.users = [

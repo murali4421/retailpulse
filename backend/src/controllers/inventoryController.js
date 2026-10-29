@@ -3,6 +3,47 @@ import { recordAuditEvent } from '../services/auditService.js';
 import { v4 as uuidv4 } from 'uuid';
 
 // Get inventory items
+export function listCategories(req, res) {
+  const categories = Array.isArray(database.categories) && database.categories.length
+    ? [...new Set(database.categories.map(cat => String(cat).trim()).filter(Boolean))]
+    : ['General'];
+
+  return res.json(categories);
+}
+
+export function addCategory(req, res) {
+  const { name } = req.body || {};
+  const categoryName = String(name || '').trim();
+
+  if (!categoryName) {
+    return res.status(400).json({ error: 'Category name is required' });
+  }
+
+  if (!Array.isArray(database.categories)) {
+    database.categories = [];
+  }
+
+  const normalized = categoryName.replace(/\s+/g, ' ');
+  const exists = database.categories.some(cat => cat.toLowerCase() === normalized.toLowerCase());
+  if (exists) {
+    return res.status(409).json({ error: 'Category already exists' });
+  }
+
+  database.categories.push(normalized);
+  saveDatabase();
+
+  recordAuditEvent({
+    eventType: 'INVENTORY_EVENT',
+    action: 'CATEGORY_CREATED',
+    userEmail: req.user?.email || 'admin@retailpulse.io',
+    details: { category: normalized }
+  });
+
+  broadcast({ type: 'CATEGORY_UPDATED', data: { category: normalized } });
+
+  return res.status(201).json({ category: normalized });
+}
+
 export function getInventory(req, res) {
   const { storeId, lowStockOnly, search, category } = req.query;
   let items = [...database.inventory];

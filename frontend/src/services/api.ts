@@ -269,6 +269,17 @@ class ApiService {
     return this.request<Product>(`/inventory/barcode/${encodeURIComponent(barcode)}?storeId=${storeId}`);
   }
 
+  async getInventoryCategories() {
+    return this.request<string[]>('/inventory/categories');
+  }
+
+  async createInventoryCategory(name: string) {
+    return this.request<{ category: string }>('/inventory/categories', {
+      method: 'POST',
+      body: JSON.stringify({ name })
+    });
+  }
+
   async saveProduct(product: Partial<Product>) {
     return this.request<Product>('/inventory', {
       method: 'POST',

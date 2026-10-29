@@ -30,6 +30,8 @@ router.post('/auth/mfa/confirm', authenticate, authCtrl.confirmMfa);
 // ==========================================
 // 2. Inventory & Barcode Tracking
 // ==========================================
+router.get('/inventory/categories', authenticate, requirePermission('inventory:read'), invCtrl.listCategories);
+router.post('/inventory/categories', authenticate, requirePermission('inventory:write'), invCtrl.addCategory);
 router.get('/inventory', authenticate, requirePermission('inventory:read'), invCtrl.getInventory);
 router.get('/inventory/barcode/:barcode', authenticate, requirePermission('inventory:read'), invCtrl.lookupBarcode);
 router.post('/inventory', authenticate, requirePermission('inventory:write'), invCtrl.saveProduct);

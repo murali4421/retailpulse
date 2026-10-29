@@ -88,6 +88,7 @@
   "sales": [],
   "reorders": [],
   "complianceRecords": [],
+  "categories": [],
   "systemSettings": {
     "currencyCode": "INR"
   }
