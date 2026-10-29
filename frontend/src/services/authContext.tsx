@@ -19,7 +19,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeStoreId, setActiveStoreId] = useState<string>(() => {
-    return localStorage.getItem('rp_active_store') || 'LOC-001';
+    const stored = localStorage.getItem('rp_active_store');
+    return stored || 'LOC-001';
   });
 
   useEffect(() => {

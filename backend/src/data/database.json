@@ -98,6 +98,24 @@
   ],
   "inventory": [
     {
+      "id": "prod_3c091d0b",
+      "stockByStore": {
+        "LOC-001": 0,
+        "LOC-002": 0,
+        "LOC-003": 0
+      },
+      "name": "XYZ",
+      "sku": "SKU-VEE8",
+      "barcode": "890127921219",
+      "category": "Beverages",
+      "description": "",
+      "costPrice": 5,
+      "retailPrice": 9.99,
+      "minAlertThreshold": 10,
+      "supplier": "TYI",
+      "updatedAt": "2026-10-29T14:00:04.962Z"
+    },
+    {
       "id": "prod_000001",
       "stockByStore": {
         "Demo-Shop-001": 0
@@ -197,5 +215,8 @@
       "handler": "admin@retailpulse.io",
       "notes": "Encrypted export packet generated and transmitted via TLS 1.3."
     }
-  ]
+  ],
+  "systemSettings": {
+    "currencyCode": "INR"
+  }
 }

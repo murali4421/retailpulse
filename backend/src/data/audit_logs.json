@@ -1,6 +1,61 @@
 {
   "auditLogs": [
     {
+      "id": "aud_af08f642",
+      "timestamp": "2026-10-29T14:02:24.280Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_admin",
+      "userEmail": "admin@retailpulse.io",
+      "userRole": "super_admin",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36",
+      "storeId": "ALL",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_c6e6c196",
+      "timestamp": "2026-10-29T14:00:04.963Z",
+      "eventType": "INVENTORY_EVENT",
+      "action": "PRODUCT_CREATED",
+      "userId": "anonymous",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "guest",
+      "ipAddress": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "id": "prod_3c091d0b",
+        "sku": "SKU-VEE8",
+        "name": "XYZ"
+      },
+      "severity": "INFO"
+    },
+    {
+      "id": "aud_eb55b521",
+      "timestamp": "2026-10-29T13:54:06.178Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
       "id": "aud_b97d9f60",
       "timestamp": "2026-10-14T10:25:41.225Z",
       "eventType": "INVENTORY_EVENT",

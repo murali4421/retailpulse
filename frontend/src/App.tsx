@@ -71,7 +71,7 @@ const MainApp: React.FC = () => {
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
       />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex min-h-0 flex-1 overflow-hidden">
         <Sidebar
           activeTab={activeTab}
           onSelectTab={handleSelectTab}
@@ -79,7 +79,7 @@ const MainApp: React.FC = () => {
           onCloseMobile={() => setIsMobileMenuOpen(false)}
         />
 
-        <main className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
           {activeTab === 'pos' && <POS />}
           {activeTab === 'dashboard' && <Dashboard onNavigateToTab={(t) => setActiveTab(t as TabType)} />}
           {activeTab === 'inventory' && <Inventory />}

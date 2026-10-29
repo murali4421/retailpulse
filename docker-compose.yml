@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     container_name: retailpulse-backend
     restart: unless-stopped
+    env_file:
+      - ./.env
     ports:
       - "${BACKEND_PORT:-4000}:4000"
     environment:
@@ -31,6 +33,8 @@ services:
         VITE_WS_URL: ${VITE_WS_URL:-ws://localhost:4000/ws}
     container_name: retailpulse-frontend
     restart: unless-stopped
+    env_file:
+      - ./.env
     ports:
       - "${FRONTEND_PORT:-5173}:80"
     depends_on:

@@ -28,12 +28,87 @@ export function broadcast(payload) {
   }
 }
 
+function normalizeStoreKey(value) {
+  if (!value) return value;
+  const mapping = {
+    'Demo-001': 'LOC-001',
+    'Demo-Shop-001': 'LOC-001',
+    'Demo Shop': 'LOC-001',
+    'Demo Store': 'LOC-001',
+    'LOC-001': 'LOC-001',
+    'ALL': 'ALL'
+  };
+  return mapping[String(value)] || value;
+}
+
+function normalizePersistedDatabase(data) {
+  if (!data || typeof data !== 'object') return data;
+
+  if (Array.isArray(data.stores) && data.stores.length) {
+    data.stores = data.stores.map((store) => {
+      const normalizedStore = { ...store };
+      normalizedStore.id = normalizeStoreKey(normalizedStore.id);
+      if (normalizedStore.id === 'LOC-001' && !normalizedStore.name) {
+        normalizedStore.name = 'Demo Store';
+      }
+      return normalizedStore;
+    });
+
+    const canonicalStore = data.stores.find((store) => store.id === 'LOC-001') || data.stores[0];
+    if (canonicalStore && !data.stores.some((store) => store.id === 'LOC-001')) {
+      canonicalStore.id = 'LOC-001';
+    }
+  }
+
+  if (Array.isArray(data.inventory)) {
+    data.inventory = data.inventory.map((item) => {
+      const stockByStore = {};
+      for (const [storeKey, quantity] of Object.entries(item.stockByStore || {})) {
+        stockByStore[normalizeStoreKey(storeKey)] = quantity;
+      }
+      return { ...item, stockByStore };
+    });
+  }
+
+  if (Array.isArray(data.sales)) {
+    data.sales = data.sales.map((sale) => ({
+      ...sale,
+      storeId: normalizeStoreKey(sale.storeId),
+      storeName: sale.storeName || 'Demo Store'
+    }));
+  }
+
+  if (Array.isArray(data.reorders)) {
+    data.reorders = data.reorders.map((reorder) => ({
+      ...reorder,
+      storeId: normalizeStoreKey(reorder.storeId)
+    }));
+  }
+
+  if (Array.isArray(data.users)) {
+    data.users = data.users.map((user) => ({
+      ...user,
+      storeId: normalizeStoreKey(user.storeId)
+    }));
+  }
+
+  if (Array.isArray(data.complianceRecords)) {
+    data.complianceRecords = data.complianceRecords.map((record) => ({
+      ...record,
+      storeId: normalizeStoreKey(record.storeId)
+    }));
+  }
+
+  return data;
+}
+
 export async function initDatabase() {
   try {
     if (fs.existsSync(DB_PATH)) {
       const data = fs.readFileSync(DB_PATH, 'utf8');
-      const parsed = JSON.parse(data);
+      const parsed = normalizePersistedDatabase(JSON.parse(data));
       Object.assign(database, parsed);
+      saveDatabase();
       console.log('Database loaded from disk.');
     } else {
       console.log('Seeding fresh database with initial stores, products, users & sales...');

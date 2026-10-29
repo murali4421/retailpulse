@@ -13,10 +13,18 @@ import { initBackupService } from './services/backupService.js';
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
-const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,http://localhost:5174')
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
+
+const allowCorsOrigin = (origin) => {
+  if (!origin) return true;
+  if (corsOrigins.includes(origin)) return true;
+  return /^http:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin)
+    || /^http:\/\/127\.0\.0\.1:(517[0-9]|418[0-9]|3000)$/.test(origin)
+    || /^https:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin);
+};
 
 if (process.env.NODE_ENV === 'production') {
   for (const name of ['JWT_SECRET', 'ENCRYPTION_MASTER_KEY']) {
@@ -34,10 +42,11 @@ app.use(helmet({
 
 app.use(cors({
   origin: (origin, callback) => {
-    callback(null, !origin || corsOrigins.includes(origin));
+    callback(null, allowCorsOrigin(origin));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true
 }));
 
 app.use(express.json({ limit: '10mb' }));
