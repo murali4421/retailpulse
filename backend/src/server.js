@@ -12,7 +12,7 @@ import { initBackupService } from './services/backupService.js';
 
 const app = express();
 const server = http.createServer(app);
-const PORT = Number(process.env.PORT || process.env.BACKEND_PORT || 4001);
+const PORT = Number(process.env.PORT || process.env.BACKEND_PORT || 4000);
 const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5175,http://localhost:5173,http://localhost:5174')
   .split(',')
   .map((origin) => origin.trim())
