@@ -1,6 +1,24 @@
 {
   "auditLogs": [
     {
+      "id": "aud_ab7cd2fa",
+      "timestamp": "2026-10-29T14:18:43.065Z",
+      "eventType": "AUTH_EVENT",
+      "action": "AUTH_LOGIN",
+      "userId": "usr_mgr",
+      "userEmail": "manager@retailpulse.io",
+      "userRole": "store_manager",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36",
+      "storeId": "LOC-001",
+      "status": "SUCCESS",
+      "details": {
+        "mfaVerified": true,
+        "method": "CREDENTIALS"
+      },
+      "severity": "INFO"
+    },
+    {
       "id": "aud_af08f642",
       "timestamp": "2026-10-29T14:02:24.280Z",
       "eventType": "AUTH_EVENT",

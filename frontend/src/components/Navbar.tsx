@@ -99,43 +99,41 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAlerts, onOpenMfaSetup, on
   const userRoleInfo = user ? roleLabelMap[user.role] || { label: user.role, color: 'bg-slate-500/20 text-slate-400 border-slate-500/30' } : null;
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur transition-colors">
-      <div className="flex h-16 items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur transition-colors dark:border-slate-800 dark:bg-slate-900/95">
+      <div className="flex h-16 items-center justify-between gap-3 px-3 sm:px-4 lg:px-6">
         {/* Brand & Multi-Store Selector */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          {/* Hamburger menu button — visible only on mobile */}
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 lg:gap-4">
           <button
             onClick={onOpenMobileMenu}
-            className="md:hidden rounded-lg p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="shrink-0 rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 md:hidden"
             aria-label="Open navigation menu"
           >
             <Menu className="h-5 w-5" />
           </button>
 
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white shadow-md shadow-indigo-500/20">
-              <StoreIcon className="h-5 w-5" />
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white shadow-md shadow-indigo-500/20 sm:h-10 sm:w-10">
+              <StoreIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <div>
-              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+            <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+              <span className="truncate text-base font-bold tracking-tight text-slate-900 dark:text-white sm:text-lg">
                 Retail<span className="text-indigo-600 dark:text-indigo-400">Pulse</span>
               </span>
-              <span className="ml-1.5 rounded bg-indigo-50 dark:bg-indigo-950/60 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+              <span className="inline-flex items-center rounded border border-indigo-200 bg-indigo-50 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-600 dark:border-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-400">
                 SaaS
               </span>
             </div>
           </div>
 
-          {/* Active Store Switcher */}
-          <div className="hidden md:flex items-center gap-2 border-l border-slate-200 dark:border-slate-800 pl-4">
-            <label htmlFor="store-select" className="text-xs font-medium text-slate-500 dark:text-slate-400">
+          <div className="hidden min-w-0 items-center gap-2 border-l border-slate-200 pl-3 dark:border-slate-800 md:flex">
+            <label htmlFor="store-select" className="shrink-0 text-[11px] font-medium text-slate-500 dark:text-slate-400">
               Active Store:
             </label>
             <select
               id="store-select"
               value={activeStoreId}
               onChange={(e) => setActiveStoreId(e.target.value)}
-              className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200"
             >
               {user?.role === 'super_admin' || user?.role === 'compliance_auditor' ? (
                 <option value="ALL">All Store Locations (HQ Aggregate)</option>
@@ -150,22 +148,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAlerts, onOpenMfaSetup, on
         </div>
 
         {/* Right Actions: Sync State, Alerts, Dark Mode, Profile */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Cloud Sync Status Indicator */}
-          <div className="flex items-center">
+        <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
+          <div className="hidden items-center sm:flex">
             {syncState.isOnline ? (
-              <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400">
+              <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
                 </span>
                 <Wifi className="h-3.5 w-3.5 text-emerald-500" />
-                <span className="hidden sm:inline">Cloud Synced</span>
+                <span className="hidden lg:inline">Cloud Synced</span>
                 {syncState.pendingSyncCount > 0 && (
                   <button
                     onClick={handleManualSync}
                     disabled={syncState.syncInProgress}
-                    className="ml-1 flex items-center gap-1 text-[11px] underline hover:text-emerald-300"
+                    className="ml-1 flex items-center gap-1 text-[10px] underline hover:text-emerald-300"
                   >
                     <RefreshCw className={`h-3 w-3 ${syncState.syncInProgress ? 'animate-spin' : ''}`} />
                     Sync ({syncState.pendingSyncCount})
@@ -173,29 +170,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAlerts, onOpenMfaSetup, on
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-50 dark:bg-amber-950/40 px-3 py-1 text-xs font-medium text-amber-700 dark:text-amber-400">
+              <div className="flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-700 dark:bg-amber-950/40 dark:text-amber-400">
                 <WifiOff className="h-3.5 w-3.5 text-amber-500" />
-                <span>Offline Mode</span>
+                <span>Offline</span>
                 {syncState.pendingSyncCount > 0 && (
-                  <span className="ml-1 rounded-full bg-amber-500 px-1.5 py-0.2 text-[10px] font-bold text-slate-900">
-                    {syncState.pendingSyncCount} queued
+                  <span className="rounded-full bg-amber-500 px-1.5 py-0.2 text-[10px] font-bold text-slate-900">
+                    {syncState.pendingSyncCount}
                   </span>
                 )}
               </div>
             )}
           </div>
 
-          {/* Security Threat Alerts Pill / Bell (Auditor & Admin only) */}
           {(user?.role === 'super_admin' || user?.permissions?.includes('audit:read') || user?.permissions?.includes('*')) && (
             <button
               onClick={onOpenAlerts}
               title="Real-time Security & Threat Monitoring"
-              className="relative rounded-lg p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="relative rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
             >
               {activeAlertsCount > 0 ? (
                 <>
                   <ShieldAlert className="h-5 w-5 text-rose-500 animate-pulse" />
-                  <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-bold text-white">
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-bold text-white">
                     {activeAlertsCount}
                   </span>
                 </>
@@ -205,21 +201,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAlerts, onOpenMfaSetup, on
             </button>
           )}
 
-          {/* Dark / Light Mode Toggle */}
           <button
             onClick={toggleTheme}
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            className="rounded-lg p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             {theme === 'dark' ? <Sun className="h-5 w-5 text-amber-400" /> : <Moon className="h-5 w-5 text-slate-700" />}
           </button>
 
-          {/* User Profile & Role Info */}
           {user && (
-            <div className="flex items-center gap-2.5 border-l border-slate-200 dark:border-slate-800 pl-3">
-              <div className="hidden lg:block text-right">
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
+              <div className="hidden text-right lg:block">
                 <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{user.name}</div>
-                <div className="flex items-center justify-end gap-1.5 mt-0.5">
+                <div className="mt-0.5 flex items-center justify-end gap-1.5">
                   <span className={`inline-flex items-center rounded border px-1.5 py-0.2 text-[10px] font-medium ${userRoleInfo?.color}`}>
                     {userRoleInfo?.label}
                   </span>
@@ -242,9 +236,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAlerts, onOpenMfaSetup, on
               <button
                 onClick={logout}
                 title="Log out of session"
-                className="rounded-lg p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                aria-label="Log out"
+                className="inline-flex items-center justify-center rounded-lg p-2 text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-500 dark:text-slate-400 dark:hover:bg-rose-950/30"
               >
-                <LogOut className="h-5 w-5" />
+                <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
           )}

@@ -109,7 +109,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToTab }) => {
   const PIE_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="flex-1 min-h-full p-4 sm:p-6 lg:p-8 space-y-6 pb-10">
       {/* Daily Report Export Modal */}
       <DailyReportModal
         isOpen={isReportModalOpen}

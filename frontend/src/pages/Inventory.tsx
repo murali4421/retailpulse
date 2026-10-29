@@ -199,7 +199,7 @@ export const Inventory: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="flex-1 min-h-full p-4 sm:p-6 lg:p-8 space-y-6 pb-10">
       <BarcodeScannerModal
         isOpen={isScannerOpen}
         onClose={() => setIsScannerOpen(false)}

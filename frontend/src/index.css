@@ -11,6 +11,15 @@
     --text-primary: #f8fafc;
   }
 
+  html, body, #root {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  html {
+    overflow-y: auto;
+  }
+
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
@@ -19,6 +28,7 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 }
 

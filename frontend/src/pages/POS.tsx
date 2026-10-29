@@ -263,7 +263,7 @@ export const POS: React.FC = () => {
   });
 
   return (
-    <div className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-4rem)] overflow-hidden">
+    <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
       {/* Barcode Scanner Modal */}
       <BarcodeScannerModal
         isOpen={isScannerOpen}
@@ -273,7 +273,7 @@ export const POS: React.FC = () => {
       />
 
       {/* Left Area: Catalog & Category Quick Select */}
-      <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-hidden bg-slate-100/50 dark:bg-slate-900/30">
+      <div className="flex min-h-0 flex-1 flex-col bg-slate-100/50 p-4 sm:p-6 dark:bg-slate-900/30">
         {/* Top Search & Barcode Button */}
         <div className="flex items-center gap-3 mb-4">
           <div className="relative flex-1">
@@ -314,17 +314,17 @@ export const POS: React.FC = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="flex-1 overflow-y-auto pr-1">
+        <div className="min-h-0 flex-1 pr-1">
           {loading ? (
-            <div className="flex items-center justify-center h-48 text-slate-400 text-sm">
+            <div className="flex h-48 items-center justify-center text-sm text-slate-400">
               Loading inventory catalog...
             </div>
           ) : filteredProducts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-48 text-center">
+            <div className="flex h-48 flex-col items-center justify-center text-center">
               <p className="text-sm font-medium text-slate-500">No products match your search or category filter.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
               {filteredProducts.map((prod) => {
                 const stock = getProductStock(prod);
                 const availableStock = Math.max(0, stock - getCartQuantity(prod.id));
@@ -381,7 +381,7 @@ export const POS: React.FC = () => {
       </div>
 
       {/* Right Area: Cart & Checkout Register */}
-      <div className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col justify-between shrink-0 shadow-lg">
+      <div className="flex w-full shrink-0 flex-col justify-between border-t border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900 lg:w-96 lg:border-l lg:border-t-0">
         {/* Cart Header */}
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 p-4">
           <div className="flex items-center gap-2">
@@ -402,7 +402,7 @@ export const POS: React.FC = () => {
         </div>
 
         {/* Cart Items List */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        <div className="flex-1 p-4 space-y-3">
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-48 text-center text-slate-400 space-y-2">
               <Barcode className="h-8 w-8 stroke-1 text-slate-300 dark:text-slate-600" />
