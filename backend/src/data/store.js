@@ -41,6 +41,31 @@ function normalizeStoreKey(value) {
   return mapping[String(value)] || value;
 }
 
+function sanitizePortalData(data) {
+  if (!data || typeof data !== 'object') return data;
+
+  const next = {
+    ...data,
+    stores: [],
+    inventory: [],
+    sales: [],
+    reorders: [],
+    complianceRecords: [],
+    systemSettings: { currencyCode: data.systemSettings?.currencyCode || 'INR' }
+  };
+
+  if (Array.isArray(data.users)) {
+    next.users = data.users.map((user) => ({
+      ...user,
+      storeId: normalizeStoreKey(user.storeId)
+    }));
+  } else {
+    next.users = [];
+  }
+
+  return next;
+}
+
 function normalizePersistedDatabase(data) {
   if (!data || typeof data !== 'object') return data;
 
@@ -99,7 +124,7 @@ function normalizePersistedDatabase(data) {
     }));
   }
 
-  return data;
+  return sanitizePortalData(data);
 }
 
 export async function initDatabase() {
@@ -108,15 +133,18 @@ export async function initDatabase() {
       const data = fs.readFileSync(DB_PATH, 'utf8');
       const parsed = normalizePersistedDatabase(JSON.parse(data));
       Object.assign(database, parsed);
+      if (!database.users || database.users.length === 0) {
+        await seedDatabase();
+      }
       saveDatabase();
-      console.log('Database loaded from disk.');
+      console.log('Database loaded from disk with seeded portal data removed.');
     } else {
-      console.log('Seeding fresh database with initial stores, products, users & sales...');
+      console.log('Initializing fresh user-only database...');
       await seedDatabase();
       saveDatabase();
     }
   } catch (err) {
-    console.error('Failed to load database, reseeding:', err.message);
+    console.error('Failed to load database, reseeding user-only data:', err.message);
     await seedDatabase();
     saveDatabase();
   }
@@ -140,19 +168,12 @@ async function seedDatabase() {
   const cashierPasswordHash = await bcrypt.hash('Cashier123!', 10);
   const auditorPasswordHash = await bcrypt.hash('Auditor123!', 10);
 
-  database.stores = [
-    {
-      id: 'LOC-001',
-      name: 'Downtown Flagship Store',
-      code: 'DWTN-01',
-      address: '101 Market St, Suite 400',
-      city: 'San Francisco, CA',
-      taxRate: 0.085,
-      phone: '+1 (555) 234-5678',
-      status: 'active',
-      lastSyncedAt: new Date().toISOString()
-    }
-  ];
+  database.stores = [];
+  database.inventory = [];
+  database.sales = [];
+  database.reorders = [];
+  database.complianceRecords = [];
+  database.systemSettings = { currencyCode: 'INR' };
 
   database.users = [
     {
@@ -164,7 +185,7 @@ async function seedDatabase() {
       storeId: 'ALL',
       phone: '+1 555-0100',
       mfaEnabled: true,
-      mfaSecret: 'JBSWY3DPEHPK3PXP', // Base32 test secret
+      mfaSecret: 'JBSWY3DPEHPK3PXP',
       status: 'active',
       createdAt: '2026-01-10T08:00:00Z',
       permissions: ['*']
@@ -175,7 +196,7 @@ async function seedDatabase() {
       email: 'manager@retailpulse.io',
       passwordHash: managerPasswordHash,
       role: 'store_manager',
-      storeId: 'LOC-001',
+      storeId: 'ALL',
       phone: '+1 555-0101',
       mfaEnabled: true,
       mfaSecret: 'JBSWY3DPEHPK3PXP',
@@ -193,7 +214,7 @@ async function seedDatabase() {
       email: 'cashier@retailpulse.io',
       passwordHash: cashierPasswordHash,
       role: 'cashier',
-      storeId: 'LOC-001',
+      storeId: 'ALL',
       phone: '+1 555-0102',
       mfaEnabled: false,
       status: 'active',
@@ -216,113 +237,6 @@ async function seedDatabase() {
         'inventory:read', 'sales:read', 'reports:view', 'reports:export',
         'audit:read', 'audit:export', 'compliance:read', 'compliance:export'
       ]
-    }
-  ];
-
-  database.inventory = [
-    {
-      id: 'prod_01',
-      sku: 'SKU-COF-01',
-      barcode: '890123456789',
-      name: 'Artisan Dark Roast Beans (12oz)',
-      category: 'Beverages',
-      description: 'Single-origin Ethiopian Yirgacheffe, freshly roasted with rich cocoa undertones.',
-      costPrice: 7.50,
-      retailPrice: 14.99,
-      stockByStore: {
-        'LOC-001': 42
-      },
-      minAlertThreshold: 15,
-      supplier: 'Pacific Roasters Co.',
-      unit: 'bag',
-      taxable: true,
-      updatedAt: new Date().toISOString()
-    }
-  ];
-
-  // Seed realistic historical sales for charts (past 7 days and today)
-  const now = Date.now();
-  const paymentMethods = ['CREDIT_CARD', 'CASH', 'APPLE_PAY', 'GOOGLE_PAY'];
-  database.sales = [];
-
-  // Generate 40 realistic recent sales transactions
-  for (let i = 0; i < 40; i++) {
-    const daysAgo = Math.floor(i / 6);
-    const hoursAgo = (i % 6) * 3 + Math.floor(Math.random() * 2);
-    const saleTime = new Date(now - daysAgo * 24 * 3600 * 1000 - hoursAgo * 3600 * 1000);
-
-    const storeId = i % 3 === 0 ? 'LOC-002' : 'LOC-001';
-    const storeTaxRate = storeId === 'LOC-001' ? 0.085 : 0.0925;
-
-    // Pick 1-3 items
-    const itemCount = 1 + (i % 3);
-    const items = [];
-    let subtotal = 0;
-
-    for (let j = 0; j < itemCount; j++) {
-      const prod = database.inventory[(i + j * 3) % database.inventory.length];
-      const qty = 1 + (j % 2);
-      const lineTotal = prod.retailPrice * qty;
-      subtotal += lineTotal;
-      items.push({
-        productId: prod.id,
-        sku: prod.sku,
-        name: prod.name,
-        price: prod.retailPrice,
-        quantity: qty,
-        lineTotal: parseFloat(lineTotal.toFixed(2))
-      });
-    }
-
-    const tax = parseFloat((subtotal * storeTaxRate).toFixed(2));
-    const total = parseFloat((subtotal + tax).toFixed(2));
-
-    database.sales.push({
-      id: `ORD-${10000 + i}`,
-      receiptNumber: `REC-${saleTime.getFullYear()}-${(10000 + i)}`,
-      timestamp: saleTime.toISOString(),
-      storeId,
-      cashierId: 'usr_cashier',
-      cashierName: 'Alex Rivera',
-      items,
-      subtotal: parseFloat(subtotal.toFixed(2)),
-      tax,
-      total,
-      paymentMethod: paymentMethods[i % paymentMethods.length],
-      status: i === 7 ? 'REFUNDED' : 'COMPLETED',
-      refundReason: i === 7 ? 'Customer returned unopened item' : null,
-      syncStatus: 'SYNCED',
-      offlineGenerated: false
-    });
-  }
-
-  // Seed sample reorder suggestions / replenishment records
-  database.reorders = [
-    {
-      id: 'REO-001',
-      orderNumber: 'PO-2026-081',
-      supplier: 'Kyoto Tea Imports',
-      storeId: 'LOC-001',
-      status: 'PENDING_APPROVAL',
-      items: [
-        { productId: 'prod_01', sku: 'SKU-TEA-02', name: 'Ceremonial Matcha Green Tea Tin (50g)', quantity: 24, unitCost: 9.20 }
-      ],
-      totalEstimatedCost: 220.80,
-      createdAt: new Date(now - 86400000).toISOString()
-    }
-  ];
-
-  // Seed GDPR / CCPA Compliance register
-  database.complianceRecords = [
-    {
-      id: 'CMP-001',
-      requestType: 'RIGHT_OF_ACCESS',
-      subjectEmail: 'customer.jane@example.com',
-      requestedAt: new Date(now - 3 * 86400000).toISOString(),
-      status: 'COMPLETED',
-      completedAt: new Date(now - 2 * 86400000).toISOString(),
-      handler: 'admin@retailpulse.io',
-      notes: 'Encrypted export packet generated and transmitted via TLS 1.3.'
     }
   ];
 }

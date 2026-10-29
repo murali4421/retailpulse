@@ -30,15 +30,21 @@ export function initAuditService() {
     if (fs.existsSync(AUDIT_FILE)) {
       const data = fs.readFileSync(AUDIT_FILE, 'utf8');
       const parsed = JSON.parse(data);
-      auditLogs = parsed.auditLogs || [];
-      securityAlerts = parsed.securityAlerts || [];
+      auditLogs = Array.isArray(parsed.auditLogs) ? parsed.auditLogs : [];
+      securityAlerts = Array.isArray(parsed.securityAlerts) ? parsed.securityAlerts : [];
+      if (auditLogs.length === 0 && securityAlerts.length === 0) {
+        saveAuditData();
+      }
     } else {
-      seedInitialAuditLogs();
+      auditLogs = [];
+      securityAlerts = [];
       saveAuditData();
     }
   } catch (err) {
-    console.error('Error initializing audit logs, creating fresh seed:', err.message);
-    seedInitialAuditLogs();
+    console.error('Error initializing audit logs, resetting to empty state:', err.message);
+    auditLogs = [];
+    securityAlerts = [];
+    saveAuditData();
   }
 }
 

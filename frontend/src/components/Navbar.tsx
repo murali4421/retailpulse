@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAlerts, onOpenMfaSetup, on
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur transition-colors dark:border-slate-800 dark:bg-slate-900/95">
-      <div className="flex h-16 items-center justify-between gap-3 px-3 sm:px-4 lg:px-6">
+      <div className="flex h-16 items-center justify-between gap-2 px-3 sm:px-4 lg:px-6">
         {/* Brand & Multi-Store Selector */}
         <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 lg:gap-4">
           <button

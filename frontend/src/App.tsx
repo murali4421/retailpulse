@@ -60,7 +60,7 @@ const MainApp: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="flex min-h-screen w-full flex-col bg-slate-100 transition-colors dark:bg-slate-950 dark:text-slate-100">
       <Navbar
         onOpenAlerts={() => {
           if (user.role === 'super_admin' || user.permissions.includes('audit:read')) {
@@ -79,7 +79,7 @@ const MainApp: React.FC = () => {
           onCloseMobile={() => setIsMobileMenuOpen(false)}
         />
 
-        <main className="flex min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto">
+        <main className="flex min-w-0 flex-1 flex-col overflow-x-hidden">
           {activeTab === 'pos' && <POS />}
           {activeTab === 'dashboard' && <Dashboard onNavigateToTab={(t) => setActiveTab(t as TabType)} />}
           {activeTab === 'inventory' && <Inventory />}
