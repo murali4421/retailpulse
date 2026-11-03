@@ -6,8 +6,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-ARG VITE_API_URL=http://localhost:4000/api
-ARG VITE_WS_URL=ws://localhost:4000/ws
+# Leave unset for same-origin cloud deployments. Set these only when the API/WebSocket
+# is hosted on a different domain than the frontend.
+ARG VITE_API_URL
+ARG VITE_WS_URL
 
 COPY . .
 RUN npm run build

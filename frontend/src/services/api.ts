@@ -1,7 +1,49 @@
 // RetailPulse Frontend API Client & WebSocket Gateway
 
-export const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:4000/api').replace(/\/$/, '');
-const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:4000/ws';
+const LOCAL_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]']);
+const LOCAL_API_URL = 'http://localhost:4000/api';
+const LOCAL_WS_URL = 'ws://localhost:4000/ws';
+
+const resolveRuntimeUrl = (envValue: string | undefined, fallback: string) => {
+  if (envValue && envValue.trim()) {
+    return envValue.trim().replace(/\/$/, '');
+  }
+
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+
+  const { hostname, protocol, host } = window.location;
+  if (LOCAL_HOSTNAMES.has(hostname)) {
+    return fallback;
+  }
+
+  return `${protocol}//${host}`;
+};
+
+const resolveApiBaseUrl = () => {
+  const runtimeUrl = resolveRuntimeUrl(import.meta.env.VITE_API_URL, LOCAL_API_URL);
+  return runtimeUrl.endsWith('/api') ? runtimeUrl : `${runtimeUrl}/api`;
+};
+
+export const API_BASE_URL = resolveApiBaseUrl();
+
+const WS_URL = (() => {
+  if (import.meta.env.VITE_WS_URL && import.meta.env.VITE_WS_URL.trim()) {
+    return import.meta.env.VITE_WS_URL.trim().replace(/\/$/, '');
+  }
+
+  if (typeof window === 'undefined') {
+    return LOCAL_WS_URL;
+  }
+
+  const { hostname, protocol, host } = window.location;
+  if (LOCAL_HOSTNAMES.has(hostname)) {
+    return LOCAL_WS_URL;
+  }
+
+  return `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}/ws`;
+})();
 
 export interface User {
   id: string;

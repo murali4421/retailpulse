@@ -111,7 +111,7 @@ npm install
 npm run dev
 ```
 *Frontend opens at `http://localhost:5173`.*
-*For a separately hosted production frontend, set `VITE_API_URL` (for example, `https://api.example.com/api`) and `VITE_WS_URL` (for example, `wss://api.example.com/ws`) before `npm run build`, then publish `dist`. These are build-time settings, not secrets.*
+*For a separately hosted production frontend, set `VITE_API_URL` (for example, `https://api.example.com/api`) and `VITE_WS_URL` (for example, `wss://api.example.com/ws`) before `npm run build`, then publish `dist`. If the frontend is served from the same domain as the backend (or a reverse proxy), leave them unset and the app will use the current origin automatically. These are build-time settings, not secrets.*
 
 ### 3. Launch Electron Desktop App
 ```bash
