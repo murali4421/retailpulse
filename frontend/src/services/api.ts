@@ -13,12 +13,18 @@ const resolveRuntimeUrl = (envValue: string | undefined, fallback: string) => {
     return fallback;
   }
 
-  const { hostname, protocol, host } = window.location;
+  const { hostname } = window.location;
   if (LOCAL_HOSTNAMES.has(hostname)) {
     return fallback;
   }
 
-  return `${protocol}//${host}`;
+  console.warn(
+    '[RetailPulse] VITE_API_URL is not configured for this production deployment. ' +
+      'Static frontend hosts such as Azure Static Web Apps do not serve the backend API. ' +
+      'Set VITE_API_URL to the real API origin (for example, https://api.example.com/api) to avoid requests being sent to the wrong host.'
+  );
+
+  return fallback;
 };
 
 const resolveApiBaseUrl = () => {
@@ -37,12 +43,17 @@ const WS_URL = (() => {
     return LOCAL_WS_URL;
   }
 
-  const { hostname, protocol, host } = window.location;
+  const { hostname } = window.location;
   if (LOCAL_HOSTNAMES.has(hostname)) {
     return LOCAL_WS_URL;
   }
 
-  return `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}/ws`;
+  console.warn(
+    '[RetailPulse] VITE_WS_URL is not configured for this production deployment. ' +
+      'Set VITE_WS_URL to the WebSocket endpoint, such as wss://api.example.com/ws, or requests will target the wrong host.'
+  );
+
+  return LOCAL_WS_URL;
 })();
 
 export interface User {
