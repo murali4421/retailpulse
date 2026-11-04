@@ -22,6 +22,8 @@ import {
 export const Settings: React.FC = () => {
   const { user } = useAuth();
   const { settings, formatPrice, updateSettings } = usePosSettings();
+  const oktaIssuer = import.meta.env.VITE_OKTA_ISSUER || 'Not configured';
+  const auth0Issuer = import.meta.env.VITE_AUTH0_ISSUER || 'Not configured';
   const [backups, setBackups] = useState<any[]>([]);
   const [loadingBackups, setLoadingBackups] = useState(false);
   const [creatingBackup, setCreatingBackup] = useState(false);
@@ -167,7 +169,7 @@ export const Settings: React.FC = () => {
               <span>Okta Workforce Identity Cloud</span>
               <span className="rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 px-2 py-0.5 text-[10px]">OIDC 1.0</span>
             </div>
-            <p className="text-slate-500 text-[11px]">Issuer: https://dev-retailpulse.okta.com/oauth2/default</p>
+            <p className="text-slate-500 text-[11px]">Issuer: {oktaIssuer}</p>
             <div className="font-mono text-[10px] text-slate-400 bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800">
               Client ID: okta_client_retailpulse_saas
             </div>
@@ -179,7 +181,7 @@ export const Settings: React.FC = () => {
               <span>Auth0 Enterprise Universal Login</span>
               <span className="rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 px-2 py-0.5 text-[10px]">OAuth 2.0</span>
             </div>
-            <p className="text-slate-500 text-[11px]">Issuer: https://retailpulse.auth0.com/</p>
+            <p className="text-slate-500 text-[11px]">Issuer: {auth0Issuer}</p>
             <div className="font-mono text-[10px] text-slate-400 bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800">
               Client ID: auth0_client_retailpulse_saas
             </div>

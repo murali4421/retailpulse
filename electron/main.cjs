@@ -21,10 +21,14 @@ function createWindow() {
     icon: path.join(__dirname, 'icon.png')
   });
 
-  const devUrl = process.env.VITE_DEV_SERVER_URL || 'http://localhost:5173';
+  const devUrl = process.env.VITE_DEV_SERVER_URL || process.env.ELECTRON_DEV_URL;
   const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
 
   if (isDev) {
+    if (!devUrl) {
+      throw new Error('Set VITE_DEV_SERVER_URL or ELECTRON_DEV_URL in the environment before running the Electron app.');
+    }
+
     mainWindow.loadURL(devUrl);
     // mainWindow.webContents.openDevTools();
   } else {

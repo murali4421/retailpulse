@@ -1,14 +1,22 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'retailpulse-super-secret-jwt-key-2026';
-const ISSUER = 'https://auth.retailpulse.io';
+const requireEnv = (name) => {
+  const value = process.env[name];
+  if (!value || !value.trim()) {
+    throw new Error(`${name} must be configured in the environment.`);
+  }
+  return value.trim();
+};
+
+const JWT_SECRET = requireEnv('JWT_SECRET');
+const ISSUER = requireEnv('OIDC_ISSUER');
 
 // Simulated OIDC Identity Providers (Okta & Auth0)
 export const IDP_CONFIGS = {
   auth0: {
     name: 'Auth0 Enterprise SSO',
-    issuer: 'https://retailpulse.auth0.com/',
+    issuer: requireEnv('AUTH0_ISSUER'),
     authorizationUrl: '/api/auth/oauth/auth0/authorize',
     tokenUrl: '/api/auth/oauth/token',
     userInfoUrl: '/api/auth/oauth/userinfo',
@@ -16,7 +24,7 @@ export const IDP_CONFIGS = {
   },
   okta: {
     name: 'Okta Workforce Identity Cloud',
-    issuer: 'https://dev-retailpulse.okta.com/oauth2/default',
+    issuer: requireEnv('OKTA_ISSUER'),
     authorizationUrl: '/api/auth/oauth/okta/authorize',
     tokenUrl: '/api/auth/oauth/token',
     userInfoUrl: '/api/auth/oauth/userinfo',

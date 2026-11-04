@@ -4,13 +4,18 @@ import { generateUserTokens, exchangeCodeForTokens, createAuthorizationCode, IDP
 import { generateMfaSecret, verifyMfaToken } from '../services/mfaService.js';
 import { recordAuditEvent } from '../services/auditService.js';
 
-const defaultRedirectUri = `${(process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/$/, '')}/auth/callback`;
+const frontendOrigin = process.env.FRONTEND_URL;
+if (!frontendOrigin) {
+  throw new Error('FRONTEND_URL must be configured in the environment before the backend starts.');
+}
+
+const defaultRedirectUri = `${frontendOrigin.replace(/\/$/, '')}/auth/callback`;
 
 // Standard Login
 export async function login(req, res) {
   try {
     const { email, password, totpToken } = req.body;
-    const ipAddress = req.ip || req.headers['x-forwarded-for'] || '127.0.0.1';
+    const ipAddress = req.ip || req.headers['x-forwarded-for'] || 'unknown';
     const userAgent = req.headers['user-agent'] || 'Web Client';
 
     if (!email || !password) {

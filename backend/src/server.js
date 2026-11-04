@@ -13,27 +13,19 @@ import { initBackupService } from './services/backupService.js';
 const app = express();
 const server = http.createServer(app);
 const PORT = Number(process.env.PORT || process.env.BACKEND_PORT || 4000);
-const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5175,http://localhost:5173,http://localhost:5174')
+const corsOrigins = (process.env.CORS_ORIGIN || '')
   .split(',')
-  .map((origin) => origin.trim())
+  .map((origin) => origin.trim().replace(/\/$/, ''))
   .filter(Boolean);
+
+if (corsOrigins.length === 0) {
+  throw new Error('CORS_ORIGIN must be configured in the environment before starting the backend.');
+}
 
 const allowCorsOrigin = (origin) => {
   if (!origin) return true;
-  if (corsOrigins.includes(origin)) return true;
-
-  if (!/^https?:\/\//.test(origin)) return false;
-
-  try {
-    const hostname = new URL(origin).hostname;
-    return /^http:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin)
-      || /^http:\/\/127\.0\.0\.1:(517[0-9]|418[0-9]|3000)$/.test(origin)
-      || /^https:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin)
-      || /(^|\.)azurestaticapps\.net$/.test(hostname)
-      || /(^|\.)azurewebsites\.net$/.test(hostname);
-  } catch {
-    return false;
-  }
+  const normalizedOrigin = origin.trim().replace(/\/$/, '');
+  return corsOrigins.includes(normalizedOrigin);
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -52,7 +44,11 @@ app.use(helmet({
 
 app.use(cors({
   origin: (origin, callback) => {
-    callback(null, allowCorsOrigin(origin));
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    return callback(null, allowCorsOrigin(origin));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -120,6 +116,9 @@ setAuditWebSocketBroadcaster(broadcastToAll);
 
 // API Documentation Endpoint (OpenAPI Spec summary)
 app.get('/api/docs', (req, res) => {
+  const requestBaseUrl = `${req.protocol}://${req.get('host')}`;
+  const configuredBaseUrl = process.env.BACKEND_URL || process.env.PUBLIC_BACKEND_URL || requestBaseUrl;
+
   res.json({
     openapi: '3.0.0',
     info: {
@@ -127,7 +126,7 @@ app.get('/api/docs', (req, res) => {
       version: '1.0.0',
       description: 'API for Small Shop Management, Real-time Inventory, Multi-Store POS, OAuth2/OIDC, and GDPR/CCPA Compliance'
     },
-    servers: [{ url: `http://localhost:${PORT}/api` }],
+    servers: [{ url: `${configuredBaseUrl.replace(/\/$/, '')}/api` }],
     endpoints: [
       { path: '/auth/login', method: 'POST', description: 'Authenticate user with credentials & optional MFA TOTP' },
       { path: '/auth/oauth/:provider/authorize', method: 'GET', description: 'OAuth2/OIDC Authorize flow (Okta/Auth0)' },
@@ -179,10 +178,14 @@ async function startServer() {
     initBackupService();
 
     server.listen(PORT, () => {
+      const configuredBackendUrl = process.env.BACKEND_URL || process.env.PUBLIC_BACKEND_URL;
+      const wsUrl = configuredBackendUrl ? `${configuredBackendUrl.replace(/^http/, 'ws').replace(/\/$/, '')}/ws` : 'BACKEND_URL or PUBLIC_BACKEND_URL not configured';
+      const docsUrl = configuredBackendUrl ? `${configuredBackendUrl.replace(/\/$/, '')}/api/docs` : 'BACKEND_URL or PUBLIC_BACKEND_URL not configured';
+
       console.log(`=======================================================`);
-      console.log(`🚀 RetailPulse SaaS Backend running on http://localhost:${PORT}`);
-      console.log(`📡 WebSocket Gateway ready at ws://localhost:${PORT}/ws`);
-      console.log(`📖 API Documentation available at http://localhost:${PORT}/api/docs`);
+      console.log(`🚀 RetailPulse SaaS Backend running on ${configuredBackendUrl || 'BACKEND_URL not configured'}`);
+      console.log(`📡 WebSocket Gateway ready at ${wsUrl}`);
+      console.log(`📖 API Documentation available at ${docsUrl}`);
       console.log(`🛡️  GDPR & CCPA Compliance Engine: ACTIVE`);
       console.log(`🔒 AES-256-GCM Data-at-Rest Encryption: ACTIVE`);
       console.log(`=======================================================`);

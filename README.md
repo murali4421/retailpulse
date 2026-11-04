@@ -101,8 +101,7 @@ cd backend
 npm install
 npm start
 ```
-*Backend runs at `http://localhost:4000` with WebSocket at `ws://localhost:4000/ws`.*
-*For production, configure `PORT`, `NODE_ENV`, `JWT_SECRET`, `ENCRYPTION_MASTER_KEY`, `CORS_ORIGIN`, and `FRONTEND_URL` in the hosting provider. Production startup requires both secrets.*
+*The backend must be configured via the environment file; do not rely on localhost defaults. Configure `BACKEND_URL`, `PORT`, `NODE_ENV`, `JWT_SECRET`, `ENCRYPTION_MASTER_KEY`, `CORS_ORIGIN`, and `FRONTEND_URL` before startup.*
 
 ### 2. Launch Frontend SPA
 ```bash
@@ -110,8 +109,7 @@ cd frontend
 npm install
 npm run dev
 ```
-*Frontend opens at `http://localhost:5173`.*
-*For a separately hosted production frontend, set `VITE_API_URL` (for example, `https://api.example.com/api`) and `VITE_WS_URL` (for example, `wss://api.example.com/ws`) before `npm run build`, then publish `dist`. Do not rely on the current origin for production deployments on static hosts such as Azure Static Web Apps; those hosts are not the API backend and will otherwise return a `405 Method Not Allowed` for `POST /api/auth/login`. If the frontend is served from the same domain as the backend (or a reverse proxy), leave them unset and the app will use the current origin automatically. These are build-time settings, not secrets. For Azure Static Web Apps, set `VITE_API_URL` and `VITE_WS_URL` in the GitHub Actions environment or as repository secrets before deploying the frontend.*
+*The frontend must also be configured via environment variables; set `VITE_API_URL` and `VITE_WS_URL` before running or building. Do not rely on localhost or implicit current-origin behavior in production.*
 
 ### 3. Launch Electron Desktop App
 ```bash
@@ -127,7 +125,7 @@ Compose reads its variables from the shell or a root `.env` file. Set at least:
 JWT_SECRET=<long-random-secret>
 ENCRYPTION_MASTER_KEY=<different-long-random-secret>
 ```
-It defaults the browser-facing API and WebSocket URLs to `http://localhost:4000/api` and `ws://localhost:4000/ws`, and the allowed frontend origin to `http://localhost:5173`. Override these for custom domains/ports:
+Set the browser-facing API and WebSocket URLs and frontend origin explicitly in your environment:
 ```dotenv
 VITE_API_URL=https://api.example.com/api
 VITE_WS_URL=wss://api.example.com/ws

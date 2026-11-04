@@ -1,79 +1,21 @@
 // RetailPulse Frontend API Client & WebSocket Gateway
 
-const LOCAL_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]']);
-const LOCAL_API_URL = 'http://localhost:4000/api';
-const LOCAL_WS_URL = 'ws://localhost:4000/ws';
-
-const resolveRuntimeUrl = (envValue: string | undefined, fallback: string) => {
-  if (envValue && envValue.trim()) {
-    return envValue.trim().replace(/\/$/, '');
+const requireEnv = (name: string) => {
+  const value = import.meta.env[name];
+  if (!value || !value.trim()) {
+    throw new Error(`[RetailPulse] ${name} is required. Set it in the frontend .env file before starting the app.`);
   }
 
-  if (typeof window === 'undefined') {
-    return fallback;
-  }
-
-  const { hostname, origin } = window.location;
-  if (LOCAL_HOSTNAMES.has(hostname)) {
-    return fallback;
-  }
-
-  if (import.meta.env.PROD) {
-    throw new Error(
-      '[RetailPulse] VITE_API_URL is required in production. ' +
-        `The frontend is running on ${origin}, which is not the API backend. Set VITE_API_URL to the backend URL, for example https://retailpulse-api-<name>.azurewebsites.net/api, then rebuild and redeploy the frontend.`
-    );
-  }
-
-  const sameOriginApiUrl = `${origin}/api`;
-  console.warn(
-    '[RetailPulse] VITE_API_URL is not configured for this deployment. ' +
-      `Falling back to the current origin (${sameOriginApiUrl}) so requests do not hit localhost.` +
-      ' If the frontend and API are served from different hosts, set VITE_API_URL explicitly to the real API origin.'
-  );
-
-  return sameOriginApiUrl;
+  return value.trim().replace(/\/$/, '');
 };
 
 const resolveApiBaseUrl = () => {
-  const runtimeUrl = resolveRuntimeUrl(import.meta.env.VITE_API_URL, LOCAL_API_URL);
+  const runtimeUrl = requireEnv('VITE_API_URL');
   return runtimeUrl.endsWith('/api') ? runtimeUrl : `${runtimeUrl}/api`;
 };
 
 export const API_BASE_URL = resolveApiBaseUrl();
-
-const resolveWebSocketUrl = () => {
-  if (import.meta.env.VITE_WS_URL && import.meta.env.VITE_WS_URL.trim()) {
-    return import.meta.env.VITE_WS_URL.trim().replace(/\/$/, '');
-  }
-
-  if (typeof window === 'undefined') {
-    return LOCAL_WS_URL;
-  }
-
-  const { hostname, protocol, host } = window.location;
-  if (LOCAL_HOSTNAMES.has(hostname)) {
-    return LOCAL_WS_URL;
-  }
-
-  if (import.meta.env.PROD) {
-    throw new Error(
-      '[RetailPulse] VITE_WS_URL is required in production. ' +
-        `The frontend is running on ${host}, which is not the WebSocket host. Set VITE_WS_URL to the backend WebSocket URL, for example wss://retailpulse-api-<name>.azurewebsites.net/ws, then rebuild and redeploy the frontend.`
-    );
-  }
-
-  const sameOriginWsUrl = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}/ws`;
-  console.warn(
-    '[RetailPulse] VITE_WS_URL is not configured for this deployment. ' +
-      `Falling back to the current origin (${sameOriginWsUrl}) so live updates do not connect to localhost.` +
-      ' If the WebSocket endpoint is hosted elsewhere, set VITE_WS_URL explicitly.'
-  );
-
-  return sameOriginWsUrl;
-};
-
-const WS_URL = resolveWebSocketUrl();
+const WS_URL = requireEnv('VITE_WS_URL');
 
 export interface User {
   id: string;

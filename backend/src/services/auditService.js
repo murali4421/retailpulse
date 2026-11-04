@@ -67,7 +67,7 @@ export function recordAuditEvent({
   userId = 'anonymous',
   userEmail = 'anonymous',
   userRole = 'guest',
-  ipAddress = '127.0.0.1',
+  ipAddress = 'unknown',
   userAgent = 'Unknown Client',
   storeId = 'LOC-001',
   status = 'SUCCESS',
