@@ -21,9 +21,19 @@ const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5175,http://lo
 const allowCorsOrigin = (origin) => {
   if (!origin) return true;
   if (corsOrigins.includes(origin)) return true;
-  return /^http:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin)
-    || /^http:\/\/127\.0\.0\.1:(517[0-9]|418[0-9]|3000)$/.test(origin)
-    || /^https:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin);
+
+  if (!/^https?:\/\//.test(origin)) return false;
+
+  try {
+    const hostname = new URL(origin).hostname;
+    return /^http:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin)
+      || /^http:\/\/127\.0\.0\.1:(517[0-9]|418[0-9]|3000)$/.test(origin)
+      || /^https:\/\/localhost:(517[0-9]|418[0-9]|3000)$/.test(origin)
+      || /(^|\.)azurestaticapps\.net$/.test(hostname)
+      || /(^|\.)azurewebsites\.net$/.test(hostname);
+  } catch {
+    return false;
+  }
 };
 
 if (process.env.NODE_ENV === 'production') {
