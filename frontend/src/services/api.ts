@@ -13,18 +13,19 @@ const resolveRuntimeUrl = (envValue: string | undefined, fallback: string) => {
     return fallback;
   }
 
-  const { hostname } = window.location;
+  const { hostname, origin } = window.location;
   if (LOCAL_HOSTNAMES.has(hostname)) {
     return fallback;
   }
 
+  const sameOriginApiUrl = `${origin}/api`;
   console.warn(
     '[RetailPulse] VITE_API_URL is not configured for this production deployment. ' +
-      'Static frontend hosts such as Azure Static Web Apps do not serve the backend API. ' +
-      'Set VITE_API_URL to the real API origin (for example, https://api.example.com/api) to avoid requests being sent to the wrong host.'
+      `Falling back to the current origin (${sameOriginApiUrl}) so requests do not hit localhost.` +
+      ' If the frontend and API are served from different hosts, set VITE_API_URL explicitly to the real API origin.'
   );
 
-  return fallback;
+  return sameOriginApiUrl;
 };
 
 const resolveApiBaseUrl = () => {
@@ -34,7 +35,7 @@ const resolveApiBaseUrl = () => {
 
 export const API_BASE_URL = resolveApiBaseUrl();
 
-const WS_URL = (() => {
+const resolveWebSocketUrl = () => {
   if (import.meta.env.VITE_WS_URL && import.meta.env.VITE_WS_URL.trim()) {
     return import.meta.env.VITE_WS_URL.trim().replace(/\/$/, '');
   }
@@ -43,18 +44,22 @@ const WS_URL = (() => {
     return LOCAL_WS_URL;
   }
 
-  const { hostname } = window.location;
+  const { hostname, protocol, host } = window.location;
   if (LOCAL_HOSTNAMES.has(hostname)) {
     return LOCAL_WS_URL;
   }
 
+  const sameOriginWsUrl = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}/ws`;
   console.warn(
     '[RetailPulse] VITE_WS_URL is not configured for this production deployment. ' +
-      'Set VITE_WS_URL to the WebSocket endpoint, such as wss://api.example.com/ws, or requests will target the wrong host.'
+      `Falling back to the current origin (${sameOriginWsUrl}) so live updates do not connect to localhost.` +
+      ' If the WebSocket endpoint is hosted elsewhere, set VITE_WS_URL explicitly.'
   );
 
-  return LOCAL_WS_URL;
-})();
+  return sameOriginWsUrl;
+};
+
+const WS_URL = resolveWebSocketUrl();
 
 export interface User {
   id: string;
