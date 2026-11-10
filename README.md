@@ -1,6 +1,6 @@
 # 🛒 RetailPulse SaaS — Small Shop Management & Real-Time Intelligence
 
-RetailPulse is an enterprise-grade, cloud-synchronized SaaS small shop management platform. It tracks real-time inventory and sales performance, features optical and hardware barcode scanning, generates automated daily financial reports, provides seamless offline-first capability with client-side encryption, and delivers comprehensive GDPR/CCPA compliance and security threat auditing.
+RetailPulse is an enterprise-grade, cloud-synchronized SaaS small shop management platform. It tracks real-time inventory and sales performance, features optical and hardware barcode scanning, generates automated daily financial reports, provides seamless offline-first capability with client-side encryption, and delivers comprehensive GDPR/CCPA compliance and security threat auditing..
 
 ----
 
