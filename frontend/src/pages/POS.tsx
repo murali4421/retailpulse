@@ -268,8 +268,10 @@ export const POS: React.FC = () => {
 
   // Filter products by category and search
   const categoryOptions = ['All', ...categories];
+  const normalizeCategory = (category: string | null | undefined) =>
+    (category || '').trim().replace(/\s+/g, ' ').toLowerCase();
   const filteredProducts = products.filter(p => {
-    const matchCat = selectedCategory === 'All' || (p.category || '').toLowerCase() === selectedCategory.toLowerCase();
+    const matchCat = selectedCategory === 'All' || normalizeCategory(p.category) === normalizeCategory(selectedCategory);
     const matchQuery =
       searchQuery === '' ||
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

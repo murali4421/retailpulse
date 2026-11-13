@@ -30,6 +30,8 @@ export const Inventory: React.FC = () => {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [lowStockFilter, setLowStockFilter] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [categoryError, setCategoryError] = useState('');
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
   // Modals state
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -98,16 +100,27 @@ export const Inventory: React.FC = () => {
   const handleCreateCategory = async (e?: React.FormEvent) => {
     e?.preventDefault();
     const trimmed = newCategoryName.trim();
-    if (!trimmed) return;
+    if (!trimmed) {
+      setCategoryError('Enter a category name first.');
+      return;
+    }
 
+    setCategoryError('');
+    setIsCreatingCategory(true);
     try {
       const result = await api.createInventoryCategory(trimmed);
       setCategories(prev => [...new Set([...prev, result.category])]);
       setNewCategoryName('');
       setSelectedProduct(prev => prev ? { ...prev, category: result.category } : prev);
       setCategoryFilter('All');
-    } catch (err: any) {
-      alert(err.message || 'Failed to create category');
+    } catch (err) {
+      setCategoryError(
+        navigator.onLine
+          ? err instanceof Error ? err.message : 'Failed to create category.'
+          : 'You are offline. Reconnect to add a category.'
+      );
+    } finally {
+      setIsCreatingCategory(false);
     }
   };
 
@@ -312,47 +325,61 @@ export const Inventory: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          {/* Category Filter */}
-          <select
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none"
-          >
-            <option value="All">All Categories</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-
-          <form onSubmit={handleCreateCategory} className="flex items-center gap-2">
-            <input
-              type="text"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              placeholder="New category"
-              className="w-32 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="rounded-xl bg-indigo-600 px-3 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+        <div className="flex w-full flex-col gap-1 md:w-auto">
+          <div className="flex items-center gap-3">
+            {/* Category Filter */}
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none"
             >
-              Add Category
-            </button>
-          </form>
+              <option value="All">All Categories</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
 
-          {/* Low Stock Toggle Pill */}
-          <button
-            onClick={() => setLowStockFilter(prev => !prev)}
-            className={`rounded-xl px-3 py-2 text-xs font-semibold border transition-all flex items-center gap-1.5 ${
-              lowStockFilter
-                ? 'bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border-amber-300 dark:border-amber-800'
-                : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
-            }`}
-          >
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
-            <span>Low Stock Alerts Only</span>
-          </button>
+            <form onSubmit={handleCreateCategory} className="flex items-center gap-2">
+              <input
+                type="text"
+                value={newCategoryName}
+                onChange={(e) => {
+                  setNewCategoryName(e.target.value);
+                  setCategoryError('');
+                }}
+                placeholder="New category"
+                aria-label="New category name"
+                aria-invalid={Boolean(categoryError)}
+                aria-describedby={categoryError ? 'category-error' : undefined}
+                className="w-32 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={isCreatingCategory}
+                className="rounded-xl bg-indigo-600 px-3 py-2 text-xs font-semibold text-white hover:bg-indigo-700 disabled:cursor-wait disabled:opacity-70"
+              >
+                {isCreatingCategory ? 'Adding...' : 'Add Category'}
+              </button>
+            </form>
+
+            {/* Low Stock Toggle Pill */}
+            <button
+              onClick={() => setLowStockFilter(prev => !prev)}
+              className={`rounded-xl px-3 py-2 text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+                lowStockFilter
+                  ? 'bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border-amber-300 dark:border-amber-800'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+              }`}
+            >
+              <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+              <span>Low Stock Alerts Only</span>
+            </button>
+          </div>
+          {categoryError && (
+            <p id="category-error" role="alert" className="text-xs text-red-600 dark:text-red-400">
+              {categoryError}
+            </p>
+          )}
         </div>
       </div>
 
