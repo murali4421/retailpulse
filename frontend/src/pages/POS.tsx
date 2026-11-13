@@ -86,6 +86,10 @@ export const POS: React.FC = () => {
     const unsub = api.subscribeToLiveEvents((event) => {
       if (event.type === 'STOCK_CHANGED' || event.type === 'INVENTORY_UPDATED') {
         loadCatalog();
+      } else if (event.type === 'CATEGORY_UPDATED' && typeof event.data?.category === 'string') {
+        setCategories(prev => prev.some(category =>
+          category.toLowerCase() === event.data.category.toLowerCase()
+        ) ? prev : [...prev, event.data.category]);
       }
     });
 
@@ -265,7 +269,7 @@ export const POS: React.FC = () => {
   // Filter products by category and search
   const categoryOptions = ['All', ...categories];
   const filteredProducts = products.filter(p => {
-    const matchCat = selectedCategory === 'All' || p.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchCat = selectedCategory === 'All' || (p.category || '').toLowerCase() === selectedCategory.toLowerCase();
     const matchQuery =
       searchQuery === '' ||
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

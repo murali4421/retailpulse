@@ -81,6 +81,10 @@ export const Inventory: React.FC = () => {
     const unsub = api.subscribeToLiveEvents((event) => {
       if (event.type === 'STOCK_CHANGED' || event.type === 'INVENTORY_UPDATED' || event.type === 'STOCK_TRANSFERRED') {
         loadData();
+      } else if (event.type === 'CATEGORY_UPDATED' && typeof event.data?.category === 'string') {
+        setCategories(prev => prev.some(category =>
+          category.toLowerCase() === event.data.category.toLowerCase()
+        ) ? prev : [...prev, event.data.category]);
       }
     });
 

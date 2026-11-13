@@ -2,34 +2,60 @@ import { database, saveDatabase, broadcast } from '../data/store.js';
 import { recordAuditEvent } from '../services/auditService.js';
 import { v4 as uuidv4 } from 'uuid';
 
+function normalizeCategoryName(value) {
+  return String(value ?? '').trim().replace(/\s+/g, ' ');
+}
+
+function getCategoryNames() {
+  const categories = new Map();
+  for (const value of [
+    ...(Array.isArray(database.categories) ? database.categories : []),
+    ...database.inventory.map(item => item.category)
+  ]) {
+    const category = normalizeCategoryName(value);
+    if (category && !categories.has(category.toLowerCase())) {
+      categories.set(category.toLowerCase(), category);
+    }
+  }
+  return [...categories.values()];
+}
+
+function addCategoryIfMissing(categoryName) {
+  if (!Array.isArray(database.categories)) {
+    database.categories = [];
+  }
+
+  if (!database.categories.some(category =>
+    normalizeCategoryName(category).toLowerCase() === categoryName.toLowerCase()
+  )) {
+    database.categories.push(categoryName);
+  }
+}
+
 // Get inventory items
 export function listCategories(req, res) {
-  const categories = Array.isArray(database.categories) && database.categories.length
-    ? [...new Set(database.categories.map(cat => String(cat).trim()).filter(Boolean))]
-    : ['General'];
+  const categories = getCategoryNames();
 
-  return res.json(categories);
+  return res.json(categories.length ? categories : ['General']);
 }
 
 export function addCategory(req, res) {
   const { name } = req.body || {};
-  const categoryName = String(name || '').trim();
+  const categoryName = normalizeCategoryName(name);
 
   if (!categoryName) {
     return res.status(400).json({ error: 'Category name is required' });
   }
 
-  if (!Array.isArray(database.categories)) {
-    database.categories = [];
-  }
-
-  const normalized = categoryName.replace(/\s+/g, ' ');
-  const exists = database.categories.some(cat => cat.toLowerCase() === normalized.toLowerCase());
+  const normalized = categoryName;
+  const exists = getCategoryNames().some(category =>
+    category.toLowerCase() === normalized.toLowerCase()
+  );
   if (exists) {
     return res.status(409).json({ error: 'Category already exists' });
   }
 
-  database.categories.push(normalized);
+  addCategoryIfMissing(normalized);
   saveDatabase();
 
   recordAuditEvent({
@@ -73,7 +99,7 @@ export function getInventory(req, res) {
   }
 
   if (category && category !== 'All') {
-    items = items.filter(i => i.category.toLowerCase() === category.toLowerCase());
+    items = items.filter(i => normalizeCategoryName(i.category).toLowerCase() === category.toLowerCase());
   }
 
   if (search) {
@@ -145,7 +171,8 @@ export function saveProduct(req, res) {
   product.name = name;
   product.sku = sku;
   product.barcode = barcode;
-  product.category = category || 'General';
+  product.category = normalizeCategoryName(category) || 'General';
+  addCategoryIfMissing(product.category);
   product.description = description || '';
   product.costPrice = parseFloat(costPrice) || 0;
   product.retailPrice = parseFloat(retailPrice) || 0;
